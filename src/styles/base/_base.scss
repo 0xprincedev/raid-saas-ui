@@ -1,0 +1,41 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  border-width: 0;
+  border-style: solid;
+  border-color: currentColor;
+  padding: 0;
+  color: #FFF;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+button,
+input {
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+*:disabled {
+  cursor: not-allowed;
+}
+
+.fixed-background {
+  position: fixed;
+  z-index: 19;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #0004;
+}

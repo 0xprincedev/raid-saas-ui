@@ -1,0 +1,28 @@
+slot-spin-inner-shadow {
+  box-shadow: inset 0px 0px 20px 1px var(--primary);
+}
+
+slot-spin-outer-shadow {
+  box-shadow: 0px 0px 20px 1px var(--primary);
+}
+
+transform-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+transform-x-center {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+transform-y-center {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
