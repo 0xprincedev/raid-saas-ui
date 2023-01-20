@@ -38,7 +38,10 @@ const theme = createTheme({
 		},
 	},
 	palette: {
-		mode: 'dark',
+		mode: 'light',
+		primary: {
+			main: '#4D4D4D',
+		},
 	},
 })
 
@@ -72,7 +75,12 @@ const App = () => {
 					</WalletModalProvider>
 				</WalletProvider>
 			</ConnectionProvider>
-			<ToastContainer autoClose={2000} theme="dark" pauseOnFocusLoss={false} />
+			<ToastContainer
+				autoClose={2000}
+				theme="light"
+				pauseOnFocusLoss={false}
+				pauseOnHover={false}
+			/>
 		</>
 	)
 }

@@ -1,0 +1,23 @@
+main.dashboard {
+  .container {
+    .dashboard {
+      .content {
+        margin-top: 32px;
+
+        .content-wrapper {
+          padding: 24px;
+
+          p {
+            color: var(--dark-gray);
+          }
+
+          h2 {
+            span {
+              font-size: 24px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

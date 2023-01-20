@@ -1,5 +1,7 @@
+import MainLayout from 'layouts/MainLayout'
+
 const Communities = () => {
-	return <div></div>
+	return <MainLayout title="Communities"></MainLayout>
 }
 
 export default Communities

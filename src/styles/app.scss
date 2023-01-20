@@ -3,10 +3,16 @@
 @import 'base/base';
 @import 'base/fonts';
 @import 'base/partial';
+@import 'base/global';
 
 @import 'components/loader';
+@import 'components/button/bookRaid';
+@import 'components/modal/userInfoEdit';
+@import 'components/raid';
+@import 'components/imageDropzone';
 
 @import 'layouts/layout';
 @import 'layouts/sidebar';
+@import 'layouts/header';
 
-@import 'pages/community';
+@import 'pages/dashboard';

@@ -1,0 +1,42 @@
+@import 'styles/abstracts/mixin';
+
+header {
+  display: none;
+  align-items: center;
+  height: 56px;
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    nav {
+      display: flex;
+      gap: 12px;
+
+      .book-a-raid {
+        width: 128px;
+        height: 36px;
+
+        div {
+          background-color: var(--background);
+          font-size: 14px;
+
+          &:hover {
+            background-color: transparent;
+          }
+        }
+      }
+
+      .wallet-adapter-button {
+        padding: 0px 12px;
+        height: 36px;
+        font-size: 14px;
+      }
+    }
+  }
+
+  @include media-md {
+    display: flex;
+  }
+}

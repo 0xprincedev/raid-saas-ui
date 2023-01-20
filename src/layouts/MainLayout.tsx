@@ -1,5 +1,6 @@
 import ReactHelmet from 'react-helmet'
 import Sidebar from './Sidebar'
+import Header from './Header'
 
 interface MainLayoutProps {
 	title?: string
@@ -15,7 +16,10 @@ const MainLayout = ({ title, className, children }: MainLayoutProps) => {
 			</ReactHelmet>
 			<div className="main-layout">
 				<Sidebar />
-				<main className={className}>{children}</main>
+				<div className="main-content">
+					<Header />
+					<main className={className}>{children}</main>
+				</div>
 			</div>
 		</>
 	)

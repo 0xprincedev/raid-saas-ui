@@ -4,130 +4,149 @@
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  border-right: 1px solid var(--theme);
+  padding: 10vh 0;
   width: 288px;
   height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  background-color: var(--white);
 
-  .title {
-    display: flex;
-    align-items: center;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  nav.menu {
+    display: grid;
     gap: 16px;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-    padding-left: 24px;
-    height: 60px;
-    background-color: var(--theme);
-    font-size: 24px;
-    cursor: default;
-  }
 
-  .communities {
-    margin-top: 10vh;
-    height: 40vh;
+    .menu-item {
+      .menu-link {
+        display: flex;
+        align-items: center;
+        border-top-left-radius: 24px;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 24px;
+        padding-left: 72px;
+        width: 288px;
+        height: 60px;
+        font-size: 20px;
+        font-weight: 600;
+        color: var(--gray);
 
-    .content {
-      height: calc(40vh - 60px);
-      overflow-y: auto;
-
-      &::-webkit-scrollbar {
-        width: 6px;
-      }
-
-      &::-webkit-scrollbar-track {
-        background: transparent;
-      }
-
-      &::-webkit-scrollbar-thumb {
-        border-radius: 5px;
-        background-color: #888;
-
-        &:hover {
-          background-color: #555;
+        svg {
+          margin-left: 16px;
+          display: none;
         }
       }
 
-      .community {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 8px;
-        border: 1px solid transparent;
-        border-top-left-radius: 8px;
-        border-bottom-left-radius: 8px;
-        padding: 0px 32px 0 64px;
-        height: 60px;
-        font-size: 18px;
-        cursor: pointer;
+      &.active {
+        .menu-link {
+          background: linear-gradient(45deg, var(--gradient-from) 0%, var(--gradient-to) 100%);
+          color: var(--white);
 
-        p {
+          svg {
+            display: block;
+          }
+        }
+      }
+
+      &.menu-communities {
+        .communities {
+          height: 0px;
           overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-        }
 
-        .badge {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-shrink: 0;
-          border-radius: 24px;
-          width: 24px;
-          height: 24px;
-          background-color: var(--theme);
-        }
+          .community {
+            display: flex;
+            align-items: center;
+            padding-left: 100px;
+            height: 40px;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--gray);
+          }
 
-        &:hover,
-        &.active {
-          border-color: var(--theme);
+          &.opened {
+            height: 160px;
+            overflow-y: scroll;
+
+            &::-webkit-scrollbar {
+              width: 8px;
+            }
+
+            &::-webkit-scrollbar-track {
+              background: transparent;
+            }
+
+            &::-webkit-scrollbar-thumb {
+              border-radius: 5px;
+              background: linear-gradient(45deg, var(--gradient-from) 0%, var(--gradient-to) 100%);
+            }
+          }
         }
       }
     }
   }
 
-  .manager {
-    margin-top: 5vh;
-    height: 20vh;
-
-    .content {
-      .settings {
-        display: flex;
-        align-items: center;
-        border: 1px solid transparent;
-        border-top-left-radius: 8px;
-        border-bottom-left-radius: 8px;
-        padding-left: 64px;
-        height: 60px;
-        font-size: 18px;
-        cursor: pointer;
-
-        &:hover {
-          border-color: var(--theme);
-        }
-      }
-    }
+  .book-a-raid {
+    margin: 32px auto 0;
   }
 
   .profile {
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 240px;
+    margin: 32px auto 0;
+    display: grid;
+    gap: 8px;
+    width: 180px;
 
     .user-information {
+      position: relative;
       display: flex;
       align-items: center;
-      gap: 12px;
-      width: 200px;
+      gap: 8px;
+
+      .user-detail {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--dark-gray);
+      }
+
+      svg {
+        display: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+        cursor: pointer;
+      }
+
+      &:hover {
+        svg {
+          display: block;
+        }
+      }
     }
 
     .wallet-adapter-button {
-      margin-top: 12px;
+      margin: 0 auto;
     }
   }
 
   @include media-md {
-    display: none;
+    position: absolute;
+    top: 0;
+    left: -288px;
+
+    &.mobile-open {
+      z-index: 100;
+      left: 0px;
+    }
+
+    .book-a-raid {
+      display: none;
+    }
+
+    .wallet-adapter-button {
+      display: none;
+    }
   }
 }
