@@ -1,0 +1,55 @@
+@import 'styles/abstracts/mixin';
+
+main.home {
+  position: relative;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  padding: 0 180px;
+
+  nav {
+    height: 162px;
+
+    a {
+      color: var(--dark-gray);
+    }
+  }
+
+  .content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .detail {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+
+      h1 {
+        font-size: 100px;
+        font-weight: 700;
+        line-height: 1;
+        color: var(--dark-gray);
+      }
+
+      p {
+        font-size: 24px;
+        color: var(--gray);
+      }
+
+      .button-group {
+        display: flex;
+        gap: 12px;
+      }
+    }
+  }
+
+  .ellipse-image {
+    position: absolute;
+    z-index: -1;
+    bottom: 0;
+    left: 50%;
+    width: 100vw;
+    transform: translateX(-50%);
+  }
+}
