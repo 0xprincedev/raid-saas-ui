@@ -3,7 +3,6 @@ import MenuIcon from '@mui/icons-material/Menu'
 
 import { useAppDispatch } from 'app/hooks'
 import { setMobileMenuStatus } from 'slices/userSlice'
-import BookRaidButton from 'components/Button/BookRaid'
 
 const Header = () => {
 	const dispatch = useAppDispatch()
@@ -20,7 +19,6 @@ const Header = () => {
 					onClick={handleOpenMenu}
 				/>
 				<nav>
-					<BookRaidButton />
 					<WalletMultiButton />
 				</nav>
 			</div>

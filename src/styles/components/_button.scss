@@ -1,0 +1,67 @@
+@import 'styles/abstracts/mixin';
+
+.btn-gradient {
+  border-radius: 999px !important;
+  padding: 0px 30px !important;
+  height: 48px;
+  background: linear-gradient(45deg, var(--gradient-from) 0%, var(--gradient-to) 100%);
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  color: var(--white) !important;
+
+  @include media-md {
+    padding: 0px 20px !important;
+    height: 40px;
+    font-size: 14px !important;
+  }
+}
+
+.btn-border-gradient {
+  position: relative;
+  z-index: 1;
+  border-radius: 999px;
+  padding: 2px;
+  height: 48px;
+  background: linear-gradient(to right, var(--gradient-from) 0%, var(--gradient-to) 100%);
+
+  &:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 2px;
+    border-radius: 999px;
+    background-color: white;
+  }
+
+  .btn__label {
+    position: relative;
+    padding: 0px 24px;
+    background: linear-gradient(to right, var(--gradient-from), var(--gradient-to));
+    background-clip: text;
+    -webkit-background-clip: text;
+    font-size: 18px;
+    font-weight: 600;
+    color: transparent;
+  }
+
+  &:hover {
+    &:before {
+      background-color: transparent;
+    }
+
+    .btn__label {
+      background: linear-gradient(to right, var(--white), var(--white));
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+  }
+
+  @include media-md {
+    height: 40px;
+
+    .btn__label {
+      padding: 0px 16px;
+      font-size: 14px;
+    }
+  }
+}

@@ -3,27 +3,49 @@
 main.home {
   position: relative;
   overflow: hidden;
+  display: flex;
   width: 100vw;
   height: 100vh;
   padding: 0 180px;
 
   nav {
-    height: 162px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 48px;
+    padding-right: 180px;
+    height: 144px;
+    width: 100vw;
 
     a {
+      font-size: 18px;
+      font-weight: 600;
       color: var(--dark-gray);
+
+      &:hover {
+        opacity: 0.8;
+      }
     }
   }
 
   .content {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
     align-items: center;
+    margin: auto 0;
+    height: fit-content;
 
     .detail {
+      grid-column: span 4 / span 4;
       display: flex;
       flex-direction: column;
+      flex-shrink: 0;
       gap: 24px;
+      width: 100%;
+      max-width: 720px;
 
       h1 {
         font-size: 100px;
@@ -42,6 +64,12 @@ main.home {
         gap: 12px;
       }
     }
+
+    .landing-image {
+      grid-column: span 3 / span 3;
+      max-width: 100%;
+      width: 100%;
+    }
   }
 
   .ellipse-image {
@@ -51,5 +79,84 @@ main.home {
     left: 50%;
     width: 100vw;
     transform: translateX(-50%);
+  }
+
+  @include media-xl {
+    nav {
+      height: 120px;
+    }
+
+    .content {
+      .detail {
+        h1 {
+          font-size: 72px;
+        }
+
+        p {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  @include media-lg {
+    padding: 0 60px;
+
+    nav {
+      padding-right: 60px
+    }
+
+    .content {
+      .detail {}
+    }
+  }
+
+  @include media-md {
+    .content {
+      .detail {
+        h1 {
+          font-size: 48px
+        }
+
+        p {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+
+  @include media-sm {
+    padding: 0px 16px;
+
+    nav {
+      gap: 24px;
+      padding-right: 16px;
+
+      a {
+        font-size: 14px;
+      }
+    }
+
+    .content {
+      margin: 120px 0 0;
+      grid-template-columns: none;
+
+      .detail {
+        z-index: 1;
+
+        .button-group {
+          margin: 0 auto;
+        }
+      }
+
+      .landing-image {
+        position: absolute;
+        z-index: 0;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 360px;
+      }
+    }
   }
 }

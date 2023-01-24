@@ -9,7 +9,6 @@ import EditIcon from '@mui/icons-material/Edit'
 import { useAppDispatch, useAppSelector } from 'app/hooks'
 import { RootState } from 'app/store'
 import { getUserProfile, setMobileMenuStatus, setWalletAddress } from 'slices/userSlice'
-import BookRaidButton from 'components/Button/BookRaid'
 import UserInfoEditModal from 'components/Modal/UserInfoEditModal'
 
 const communities = [
@@ -123,7 +122,6 @@ const Sidebar = () => {
 						</Link>
 					</div>
 				</nav>
-				<BookRaidButton />
 				<div className="profile">
 					<div className="user-information">
 						<Avatar src="/images/avatar.png" />
