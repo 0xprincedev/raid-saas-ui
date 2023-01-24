@@ -1,0 +1,116 @@
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  outline: none;
+  border: none;
+  border-radius: 12px;
+  padding: 24px;
+  background-color: var(--white);
+
+  &__content {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__create-account {
+    padding: 80px 24px;
+    width: 100%;
+    max-width: 560px;
+
+    .modal__header {
+      h1 {
+        font-size: 40px;
+        font-weight: 600;
+      }
+
+      .stepper {
+        margin-top: 12px;
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+
+        .step {
+          border-radius: 10px;
+          width: 10px;
+          height: 10px;
+          background-color: var(--gray);
+
+          &__active {
+            background: linear-gradient(45deg, var(--gradient-from), var(--gradient-to));
+          }
+        }
+      }
+
+      p {
+        font-size: 15px;
+        color: var(--gray);
+      }
+    }
+
+    .modal__body {
+      margin-top: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      h2 {
+        font-size: 24px;
+        font-weight: 600;
+        color: var(--dark-gray);
+      }
+
+      p {
+        font-size: 15px;
+        color: var(--gray)
+      }
+
+      .lottie-player {
+        text-align: center;
+        margin-top: -40px;
+      }
+
+      button {
+        margin-top: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        border-radius: 999px;
+        padding: 10px 15px;
+        font-size: 15px;
+        color: var(--white);
+
+        svg {
+          width: 16px;
+          height: 16px;
+          fill: var(--white);
+
+          path {
+            fill: var(--white);
+          }
+        }
+
+        &.connect-twitter {
+          background-color: #1D9BF0;
+        }
+
+        &.connect-discord {
+          background-color: #5865F2;
+        }
+
+        &.connect-wallet {
+          background: linear-gradient(45deg, var(--gradient-from), var(--gradient-to));
+        }
+      }
+    }
+  }
+}
+
+.wallet-adapter-modal {
+  z-index: 1400 !important;
+}

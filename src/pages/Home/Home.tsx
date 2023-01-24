@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom'
 import { Button } from '@mui/material'
 
+import CreateAccountModal from 'components/Modal/CreateAccountModal'
+
 const Home = () => {
 	return (
 		<main className="home">
+			<CreateAccountModal open={false} closeModal={() => console.log('123')} />
 			<nav>
 				<Link to="/dashboard">Dashboard</Link>
 				<button className="btn-gradient create-community">Create Community</button>

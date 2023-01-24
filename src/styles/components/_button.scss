@@ -22,7 +22,7 @@
   border-radius: 999px;
   padding: 2px;
   height: 48px;
-  background: linear-gradient(to right, var(--gradient-from) 0%, var(--gradient-to) 100%);
+  background: linear-gradient(45deg, var(--gradient-from) 0%, var(--gradient-to) 100%);
 
   &:before {
     content: "";
@@ -36,7 +36,7 @@
   .btn__label {
     position: relative;
     padding: 0px 24px;
-    background: linear-gradient(to right, var(--gradient-from), var(--gradient-to));
+    background: linear-gradient(45deg, var(--gradient-from), var(--gradient-to));
     background-clip: text;
     -webkit-background-clip: text;
     font-size: 18px;
@@ -50,7 +50,7 @@
     }
 
     .btn__label {
-      background: linear-gradient(to right, var(--white), var(--white));
+      background: linear-gradient(45deg, var(--white), var(--white));
       background-clip: text;
       -webkit-background-clip: text;
     }

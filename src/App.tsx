@@ -63,11 +63,7 @@ const App = () => {
 	return (
 		<>
 			<ConnectionProvider endpoint={endpoint}>
-				<WalletProvider
-					wallets={wallets}
-					onError={walletConnectionError}
-					autoConnect={true}
-				>
+				<WalletProvider wallets={wallets} onError={walletConnectionError}>
 					<WalletModalProvider>
 						<ThemeProvider theme={theme}>
 							<CssBaseline />
