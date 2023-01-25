@@ -15,7 +15,7 @@ interface Props {
 
 const CreateAccountModal = (props: Props) => {
 	const { open, closeModal } = props
-	const [currentStep, setCurrentStep] = useState<number>(3)
+	const [currentStep, setCurrentStep] = useState<number>(0)
 	const wallet = useWallet()
 	const { setVisible } = useWalletModal()
 
@@ -33,31 +33,34 @@ const CreateAccountModal = (props: Props) => {
 	}
 
 	const handleConnectTwitter = () => {
-		setCurrentStep(1)
-	}
-
-	const handleConnectDiscord = () => {
 		setCurrentStep(2)
 	}
 
-	const handleConnectWallet = () => {
-		setVisible(true)
+	const handleConnectDiscord = () => {
+		setCurrentStep(3)
 	}
 
+	const handleConnectWallet = () => {
+		setCurrentStep(1)
+		// setVisible(true)
+	}
+
+	const handleStartRaiding = () => {}
+
 	const getTitleText = (_currentStep: number) => {
-		if (_currentStep === 0) {
+		if (_currentStep === 1) {
 			return 'Connect your Twitter'
-		} else if (_currentStep === 1) {
-			return 'Connect your Discord'
 		} else if (_currentStep === 2) {
+			return 'Connect your Discord'
+		} else if (_currentStep === 0) {
 			return 'Link your wallet'
 		}
 	}
 
 	const getDescription = (_currentStep: number) => {
-		if (_currentStep <= 1) {
+		if (_currentStep === 1 || _currentStep === 2) {
 			return 'Account you plan to raid with'
-		} else if (_currentStep === 2) {
+		} else if (_currentStep === 0) {
 			return 'Verifying ownership of wallet'
 		}
 	}
@@ -77,7 +80,7 @@ const CreateAccountModal = (props: Props) => {
 									.fill(0)
 									.map((item, index) => (
 										<div
-											className={`step ${currentStep === index ? 'step__active' : ''}`}
+											className={`step ${currentStep >= index ? 'step__active' : ''}`}
 										/>
 									))}
 							</div>
@@ -97,21 +100,23 @@ const CreateAccountModal = (props: Props) => {
 							/>
 						)}
 						{currentStep === 0 ? (
+							<button className="connect-wallet" onClick={handleConnectWallet}>
+								Connect Wallet
+							</button>
+						) : currentStep === 1 ? (
 							<button className="connect-twitter" onClick={handleConnectTwitter}>
 								<TwitterIcon />
 								Connect Twitter
 							</button>
-						) : currentStep === 1 ? (
+						) : currentStep === 2 ? (
 							<button className="connect-discord" onClick={handleConnectDiscord}>
 								<DiscordIcon />
 								Connect Discord
 							</button>
-						) : currentStep === 2 ? (
-							<button className="connect-wallet" onClick={handleConnectWallet}>
-								Connect Wallet
-							</button>
 						) : (
-							<button className="btn-gradient">Start Raiding</button>
+							<button className="btn-gradient" onClick={handleStartRaiding}>
+								Start Raiding
+							</button>
 						)}
 					</div>
 				</div>
