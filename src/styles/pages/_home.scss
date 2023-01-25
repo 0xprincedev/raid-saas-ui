@@ -4,23 +4,24 @@ main.home {
   position: relative;
   overflow: hidden;
   display: flex;
+  flex-direction: column;
   width: 100vw;
   height: 100vh;
-  padding: 0 180px;
+  padding: 0 120px;
+  background-image: url('../../../public/images/background.png');
+  background-size: cover;
 
   nav {
-    position: absolute;
-    top: 0;
-    left: 0;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    gap: 48px;
-    padding-right: 180px;
     height: 144px;
-    width: 100vw;
 
-    a {
+    .logo {
+      margin-right: auto;
+    }
+
+    .login {
+      margin-right: 20px;
       font-size: 18px;
       font-weight: 600;
       color: var(--dark-gray);
@@ -72,6 +73,12 @@ main.home {
     }
   }
 
+  .how-it-works {
+    margin: 0 auto 24px;
+    width: 100%;
+    max-width: 826px;
+  }
+
   .ellipse-image {
     position: absolute;
     z-index: -1;
@@ -101,10 +108,6 @@ main.home {
 
   @include media-lg {
     padding: 0 60px;
-
-    nav {
-      padding-right: 60px
-    }
   }
 
   @include media-md {
@@ -125,20 +128,19 @@ main.home {
     padding: 0px 16px;
 
     nav {
-      gap: 24px;
-      padding-right: 16px;
-
       a {
         font-size: 14px;
       }
     }
 
     .content {
-      margin: 120px 0 0;
       grid-template-columns: none;
 
       .detail {
+        margin: 0 auto;
         z-index: 1;
+        width: 100%;
+        max-width: 540px;
 
         .button-group {
           margin: 0 auto;
@@ -146,6 +148,7 @@ main.home {
       }
 
       .landing-image {
+        display: none;
         position: absolute;
         z-index: 0;
         bottom: 20px;
