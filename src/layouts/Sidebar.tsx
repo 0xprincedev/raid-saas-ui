@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import { Avatar } from '@mui/material'
-import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
-import { useWallet } from '@solana/wallet-adapter-react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import Button from '@mui/material/Button'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import EditIcon from '@mui/icons-material/Edit'
 
 import { useAppDispatch, useAppSelector } from 'app/hooks'
 import { RootState } from 'app/store'
-import { getUserProfile, setMobileMenuStatus, setWalletAddress } from 'slices/userSlice'
+import { setMobileMenuStatus } from 'slices/userSlice'
 import UserInfoEditModal from 'components/Modal/UserInfoEditModal'
 
 const communities = [
@@ -42,24 +39,16 @@ const communities = [
 	},
 ]
 
-const Sidebar = () => {
+interface Props {
+	type: number
+}
+
+const Sidebar = ({ type }: Props) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false)
 	const [editModalOpen, setEditModalOpen] = useState<boolean>(false)
 	const { pathname } = useLocation()
+	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
-	const wallet = useWallet()
-
-	const username = useAppSelector((state: RootState) => state.userSlice.username)
-	const twitterId = useAppSelector((state: RootState) => state.userSlice.twitterId)
-
-	useEffect(() => {
-		if (!wallet.publicKey) {
-			dispatch(setWalletAddress(''))
-			return
-		}
-		dispatch(setWalletAddress(wallet.publicKey.toString()))
-		dispatch(getUserProfile(wallet.publicKey.toString()))
-	}, [wallet.publicKey, dispatch])
 
 	const isMobileMenuOpen = useAppSelector(
 		(state: RootState) => state.userSlice.isMobileMenuOpen
@@ -81,10 +70,6 @@ const Sidebar = () => {
 		setIsOpen((prev) => !prev)
 	}
 
-	const handleEditClick = () => {
-		setEditModalOpen(true)
-	}
-
 	return (
 		<>
 			<UserInfoEditModal
@@ -93,48 +78,68 @@ const Sidebar = () => {
 			/>
 			<aside className={`sidebar ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
 				<nav className="menu">
-					<div className={`menu-item ${isActive('dashboard')}`}>
-						<Link to="/dashboard" className="menu-link">
-							Dashboard
-						</Link>
-					</div>
-					<div className={`menu-item menu-communities ${isActive('communities')}`}>
-						<Link to="/communities" className="menu-link" onClick={handleClickCommunity}>
-							Communities
-							<ExpandMoreIcon />
-						</Link>
-						<div className={`communities ${isOpen ? 'opened' : ''}`}>
-							{communities.map((community, index) => (
-								<div className="community" key={index}>
-									{community.name}
+					{type === 0 ? (
+						<>
+							<div className={`menu-item ${isActive('dashboard')}`}>
+								<Link to="/dashboard" className="menu-link">
+									Dashboard
+								</Link>
+							</div>
+							<div className={`menu-item menu-communities ${isActive('communities')}`}>
+								<Link
+									to="/communities"
+									className="menu-link"
+									onClick={handleClickCommunity}
+								>
+									Communities
+									<ExpandMoreIcon />
+								</Link>
+								<div className={`communities ${isOpen ? 'opened' : ''}`}>
+									{communities.map((community, index) => (
+										<div className="community" key={index}>
+											{community.name}
+										</div>
+									))}
 								</div>
-							))}
-						</div>
-					</div>
-					<div className={`menu-item ${isActive('leaderboard')}`}>
-						<Link to="/leaderboard" className="menu-link">
-							Leaderboard
-						</Link>
-					</div>
-					<div className={`menu-item ${isActive('settings')}`}>
-						<Link to="/settings" className="menu-link">
-							Settings
-						</Link>
-					</div>
+							</div>
+							<div className={`menu-item ${isActive('leaderboard')}`}>
+								<Link to="/leaderboard" className="menu-link">
+									Leaderboard
+								</Link>
+							</div>
+							<div className={`menu-item ${isActive('settings')}`}>
+								<Link to="/settings" className="menu-link">
+									Settings
+								</Link>
+							</div>
+							<Button
+								className="btn-border-gradient book-a-raid"
+								onClick={() => navigate('/book-a-raid')}
+							>
+								<span className="btn__label">Book a Raid</span>
+							</Button>
+						</>
+					) : (
+						<>
+							<div className={`menu-item ${isActive('book-a-raid')}`}>
+								<Link to="/book-a-raid" className="menu-link">
+									Book a Raid
+								</Link>
+							</div>
+							<div className={`menu-item ${isActive('profile')}`}>
+								<Link to="/profile" className="menu-link">
+									Profile
+								</Link>
+							</div>
+							<Button
+								className="btn-border-gradient start-raiding"
+								onClick={() => navigate('/dashboard')}
+							>
+								<span className="btn__label">Start Raiding</span>
+							</Button>
+						</>
+					)}
 				</nav>
-				{/* <div className="profile">
-					<div className="user-information">
-						<Avatar src="/images/avatar.png" />
-						<div className="user-detail">
-							<p className="username">{username}</p>
-							<p className="twitter-id">{twitterId}</p>
-						</div>
-						<span title="Click to edit" onClick={handleEditClick}>
-							<EditIcon sx={{ width: 16, height: 16 }} />
-						</span>
-					</div>
-					<WalletMultiButton />
-				</div> */}
 			</aside>
 			{isMobileMenuOpen && (
 				<div

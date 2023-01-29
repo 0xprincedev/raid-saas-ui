@@ -20,7 +20,8 @@ h5,
 h6,
 p,
 span,
-a {
+a,
+aside {
   transition: all .2s ease-in-out;
 
   &::before,

@@ -1,30 +1,22 @@
 import { useEffect, useState } from 'react'
-import IconButton from '@mui/material/IconButton'
 import LightModeIcon from '@mui/icons-material/LightMode'
 import DarkModeIcon from '@mui/icons-material/DarkMode'
+
+import { useAppDispatch } from 'app/hooks'
+import { setColorMode as setColorModeSlice } from 'slices/userSlice'
 
 const ColorMode = () => {
 	const [colorMode, setColorMode] = useState<ColorMode>(
 		(localStorage.getItem('raid-saas-color-mode') as ColorMode) || 'light'
 	)
+	const dispatch = useAppDispatch()
+		dispatch(setColorModeSlice(colorMode))
+	}, [colorMode, dispatch])
 
-	useEffect(() => {
-		localStorage.setItem('raid-saas-color-mode', colorMode)
-		document.body.className = colorMode
-	}, [colorMode])
-
-	const handleSwitchMode = () => {
-		if (colorMode === 'light') {
-			setColorMode('dark')
-			return
-		}
-		setColorMode('light')
-	}
-
-	return (
-		<IconButton onClick={handleSwitchMode}>
-			{colorMode === 'light' ? <LightModeIcon /> : <DarkModeIcon sx={{ fill: '#FFF' }} />}
-		</IconButton>
+	return colorMode === 'light' ? (
+		<LightModeIcon sx={{ cursor: 'pointer' }} onClick={() => setColorMode('dark')} />
+	) : (
+		<DarkModeIcon sx={{ cursor: 'pointer' }} onClick={() => setColorMode('light')} />
 	)
 }
 

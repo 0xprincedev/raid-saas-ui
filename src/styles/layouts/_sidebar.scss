@@ -43,7 +43,7 @@
       &.active {
         .menu-link {
           background: linear-gradient(45deg, var(--gradient-from) 0%, var(--gradient-to) 100%);
-          color: var(--white);
+          color: #FFF;
 
           svg {
             display: block;
@@ -86,66 +86,26 @@
         }
       }
     }
+
+    .start-raiding {
+      margin: 20vh auto 0;
+      width: 192px;
+    }
   }
 
   .book-a-raid {
-    margin: 32px auto 0;
-  }
-
-  .profile {
-    margin: 32px auto 0;
-    display: grid;
-    gap: 8px;
-    width: 180px;
-
-    .user-information {
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-
-      .user-detail {
-        font-size: 14px;
-        font-weight: 600;
-        color: var(--dark-gray);
-      }
-
-      svg {
-        display: none;
-        position: absolute;
-        top: 0;
-        right: 0;
-        cursor: pointer;
-      }
-
-      &:hover {
-        svg {
-          display: block;
-        }
-      }
-    }
-
-    .wallet-adapter-button {
-      margin: 0 auto;
-    }
+    margin: 20vh auto 0;
+    width: 192px;
   }
 
   @include media-md {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: -288px;
 
     &.mobile-open {
       z-index: 100;
       left: 0px;
-    }
-
-    .book-a-raid {
-      display: none;
-    }
-
-    .wallet-adapter-button {
-      display: none;
     }
   }
 }

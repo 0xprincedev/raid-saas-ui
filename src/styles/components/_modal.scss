@@ -81,7 +81,7 @@
         justify-content: center;
         gap: 5px;
         border-radius: 999px;
-        padding: 10px 15px;
+        padding: 10px 30px;
         font-size: 15px;
         color: var(--white);
 
@@ -95,16 +95,16 @@
           }
         }
 
+        &.btn-gradient {
+          color: #FFF;
+        }
+
         &.connect-twitter {
           background-color: var(--twitter);
         }
 
         &.connect-discord {
           background-color: var(--discord);
-        }
-
-        &.connect-wallet {
-          background: linear-gradient(45deg, var(--gradient-from), var(--gradient-to));
         }
       }
     }
