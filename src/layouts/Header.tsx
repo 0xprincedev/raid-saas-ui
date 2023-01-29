@@ -3,6 +3,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 
 import { useAppDispatch } from 'app/hooks'
 import { setMobileMenuStatus } from 'slices/userSlice'
+import ColorMode from 'components/ColorMode'
 
 const Header = () => {
 	const dispatch = useAppDispatch()
@@ -14,6 +15,7 @@ const Header = () => {
 	return (
 		<header>
 			<div className="container">
+				<ColorMode />
 				<MenuIcon
 					sx={{ width: 24, height: 24, cursor: 'pointer' }}
 					onClick={handleOpenMenu}

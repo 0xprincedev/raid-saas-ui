@@ -7,7 +7,7 @@
   background: linear-gradient(45deg, var(--gradient-from) 0%, var(--gradient-to) 100%);
   font-size: 18px !important;
   font-weight: 600 !important;
-  color: var(--white) !important;
+  color: #FFF !important;
 
   @include media-md {
     padding: 0px 20px !important;
@@ -50,7 +50,7 @@
     }
 
     .btn__label {
-      background: linear-gradient(45deg, var(--white), var(--white));
+      background: linear-gradient(45deg, #FFF, #FFF);
       background-clip: text;
       -webkit-background-clip: text;
     }

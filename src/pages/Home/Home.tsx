@@ -5,6 +5,7 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import { useWalletModal } from '@solana/wallet-adapter-react-ui'
 
 import CreateAccountModal from 'components/Modal/CreateAccountModal'
+import ColorMode from 'components/ColorMode'
 
 const Home = () => {
 	const [open, setOpen] = useState<boolean>(false)
@@ -30,6 +31,7 @@ const Home = () => {
 				<Link to="/" className="logo">
 					<img src="/images/logo.png" alt="" />
 				</Link>
+				<ColorMode />
 				<Link to="/ " className="login">
 					Login
 				</Link>

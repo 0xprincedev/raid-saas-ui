@@ -1,0 +1,28 @@
+.totalGraphView-component {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  width: 240px;
+  height: 200px;
+
+  h6 {
+    color: var(--dark-gray);
+  }
+
+  .chart-view {
+    display: flex;
+    justify-content: space-between;
+
+    .progressbar {
+      width: 120px;
+      height: 120px;
+    }
+
+    .delta {
+      display: flex;
+      align-items: center;
+      height: fit-content;
+    }
+  }
+}

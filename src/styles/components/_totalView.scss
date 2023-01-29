@@ -1,0 +1,32 @@
+.totalView-component {
+  padding: 20px;
+  width: 288px;
+  height: 200px;
+
+  h6 {
+    color: var(--dark-gray);
+  }
+
+  h2 {
+    span {
+      font-size: 24px;
+    }
+  }
+
+  .chart-view {
+    display: flex;
+    justify-content: space-between;
+
+    .chart-data {
+      width: 180px;
+      height: 80px;
+    }
+
+    .delta {
+      display: flex;
+      align-items: center;
+      height: fit-content;
+    }
+  }
+
+}

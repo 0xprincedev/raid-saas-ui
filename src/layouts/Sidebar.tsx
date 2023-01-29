@@ -122,7 +122,7 @@ const Sidebar = () => {
 						</Link>
 					</div>
 				</nav>
-				<div className="profile">
+				{/* <div className="profile">
 					<div className="user-information">
 						<Avatar src="/images/avatar.png" />
 						<div className="user-detail">
@@ -134,7 +134,7 @@ const Sidebar = () => {
 						</span>
 					</div>
 					<WalletMultiButton />
-				</div>
+				</div> */}
 			</aside>
 			{isMobileMenuOpen && (
 				<div

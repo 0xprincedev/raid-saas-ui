@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import Lottie from 'react-lottie-player'
-import { Modal } from '@mui/material'
+import { Button, Modal } from '@mui/material'
 import TwitterIcon from '@mui/icons-material/Twitter'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { useWalletModal } from '@solana/wallet-adapter-react-ui'
@@ -19,17 +19,12 @@ const CreateAccountModal = (props: Props) => {
 	const wallet = useWallet()
 	const { setVisible } = useWalletModal()
 
-	useEffect(() => {
-		if (wallet.publicKey) {
-			console.log(wallet.publicKey.toString())
-		}
-	}, [wallet])
-
 	const handleClose = () => {
 		if (!window.confirm('Are you sure you want to cancel creating account?')) {
 			return
 		}
 		closeModal()
+		setCurrentStep(0)
 	}
 
 	const handleConnectTwitter = () => {
@@ -41,8 +36,11 @@ const CreateAccountModal = (props: Props) => {
 	}
 
 	const handleConnectWallet = () => {
+		if (!wallet.publicKey) {
+			setVisible(true)
+			return
+		}
 		setCurrentStep(1)
-		// setVisible(true)
 	}
 
 	const handleStartRaiding = () => {}
@@ -81,6 +79,7 @@ const CreateAccountModal = (props: Props) => {
 									.map((item, index) => (
 										<div
 											className={`step ${currentStep >= index ? 'step__active' : ''}`}
+											key={index}
 										/>
 									))}
 							</div>
@@ -100,23 +99,23 @@ const CreateAccountModal = (props: Props) => {
 							/>
 						)}
 						{currentStep === 0 ? (
-							<button className="connect-wallet" onClick={handleConnectWallet}>
+							<Button className="btn-gradient" onClick={handleConnectWallet}>
 								Connect Wallet
-							</button>
+							</Button>
 						) : currentStep === 1 ? (
-							<button className="connect-twitter" onClick={handleConnectTwitter}>
+							<Button className="connect-twitter" onClick={handleConnectTwitter}>
 								<TwitterIcon />
 								Connect Twitter
-							</button>
+							</Button>
 						) : currentStep === 2 ? (
-							<button className="connect-discord" onClick={handleConnectDiscord}>
+							<Button className="connect-discord" onClick={handleConnectDiscord}>
 								<DiscordIcon />
 								Connect Discord
-							</button>
+							</Button>
 						) : (
-							<button className="btn-gradient" onClick={handleStartRaiding}>
+							<Button className="btn-gradient" onClick={handleStartRaiding}>
 								Start Raiding
-							</button>
+							</Button>
 						)}
 					</div>
 				</div>
