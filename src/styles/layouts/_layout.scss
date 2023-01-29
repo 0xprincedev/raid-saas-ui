@@ -15,11 +15,6 @@
     main {
       flex-grow: 1;
       display: flex;
-
-      .container {
-        margin-top: 64px;
-        margin-bottom: 64px;
-      }
     }
   }
 
@@ -37,6 +32,10 @@
 
     @include media-md {
       margin: 0px 16px;
+    }
+
+    @include media-sm {
+      margin: 0px 12px;
     }
   }
 }

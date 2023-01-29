@@ -1,0 +1,138 @@
+@import 'styles/abstracts/mixin';
+
+main.book-a-raid {
+  margin-bottom: 12px;
+
+  .container {
+    display: flex;
+    gap: 24px;
+
+    .new-raid-campaign {
+      width: 100%;
+      max-width: 1120px;
+      height: fit-content;
+
+      .content {
+        padding: 32px;
+
+        h5 {
+          margin-top: 4px;
+          font-weight: 400;
+          color: var(--gray)
+        }
+
+        .divider {
+          margin: 24px 0;
+          border-top: 1px solid var(--gray-2);
+          width: 100%;
+        }
+
+        .form {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 40px;
+
+          &__body {
+            display: grid;
+            grid-column: span 2 / span 2;
+            gap: 20px;
+
+            .select-group {
+              display: grid;
+              grid-template-columns: repeat(2, minmax(0, 1fr));
+              gap: 20px;
+            }
+          }
+
+          &__footer {
+            border-radius: 4px;
+            overflow: hidden;
+            background-color: var(--gray-4);
+            font-size: 15px;
+
+            .title {
+              padding: 16px;
+              font-size: 15px;
+              font-weight: 600;
+              color: var(--dark-gray)
+            }
+
+            >div {
+              display: flex;
+              justify-content: space-between;
+              gap: 12px;
+              border-top: 1px solid var(--gray-2);
+              padding: 16px;
+              color: var(--gray);
+
+              span:last-child {
+                text-align: right;
+              }
+
+              &:last-child {
+                border-top: none;
+                background-color: var(--gray-3);
+                color: var(--dark-gray);
+              }
+            }
+          }
+
+          .preview {
+            display: flex;
+            flex-direction: column;
+
+            .tweet-preview {
+              width: 100%;
+              aspect-ratio: 0.8;
+              border: 2px dashed var(--gray);
+              border-radius: 8px;
+            }
+
+            button {
+              margin: 24px 0;
+            }
+          }
+        }
+      }
+    }
+
+    @include media-xl {
+      flex-direction: column;
+    }
+
+    @include media-sm {
+      .new-raid-campaign {
+        .content {
+          padding: 20px 16px;
+
+          .form {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+
+            &__body {
+              .select-group {
+                grid-template-columns: none;
+              }
+            }
+
+            &__footer {
+              .title {
+                padding: 12px;
+              }
+
+              >div {
+                padding: 12px;
+                font-size: 12px;
+              }
+            }
+
+            .preview {
+              flex-direction: column-reverse;
+            }
+          }
+        }
+      }
+    }
+  }
+}

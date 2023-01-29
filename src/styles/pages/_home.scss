@@ -5,16 +5,18 @@ main.home {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   width: 100vw;
   height: 100vh;
   padding: 0 120px;
-  // background-image: url('../../../public/images/background.png');
+  background-image: url('../../../public/images/background.png');
   background-size: cover;
   background-color: var(--white);
 
   nav {
     display: flex;
     align-items: center;
+    gap: 24px;
     height: 144px;
 
     .logo {
@@ -22,10 +24,10 @@ main.home {
     }
 
     .login {
-      margin-right: 20px;
       font-size: 18px;
       font-weight: 600;
       color: var(--dark-gray);
+      cursor: pointer;
 
       &:hover {
         opacity: 0.8;
@@ -35,13 +37,13 @@ main.home {
 
   .content {
     display: grid;
-    grid-template-columns: repeat(7, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     align-items: center;
     margin: auto 0;
     height: fit-content;
 
     .detail {
-      grid-column: span 4 / span 4;
+      grid-column: span 3 / span 3;
       display: flex;
       flex-direction: column;
       flex-shrink: 0;
@@ -68,14 +70,14 @@ main.home {
     }
 
     .landing-image {
-      grid-column: span 3 / span 3;
+      grid-column: span 2 / span 2;
       max-width: 100%;
       width: 100%;
     }
   }
 
   .how-it-works {
-    margin: 0 auto 24px;
+    margin: 0 auto 12px;
     width: 100%;
     max-width: 826px;
   }
@@ -112,6 +114,10 @@ main.home {
   }
 
   @include media-md {
+    nav {
+      height: 96px;
+    }
+
     .content {
       .detail {
         h1 {
@@ -129,7 +135,18 @@ main.home {
     padding: 0px 16px;
 
     nav {
-      a {
+      gap: 12px;
+
+      .logo img {
+        width: 32px;
+      }
+
+      >svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      .login {
         font-size: 14px;
       }
     }
@@ -158,5 +175,11 @@ main.home {
         width: 360px;
       }
     }
+  }
+}
+
+.dark {
+  main.home {
+    background-image: none;
   }
 }

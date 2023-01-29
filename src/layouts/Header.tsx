@@ -1,4 +1,4 @@
-import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
+import Button from '@mui/material/Button'
 import MenuIcon from '@mui/icons-material/Menu'
 
 import { useAppDispatch } from 'app/hooks'
@@ -15,13 +15,14 @@ const Header = () => {
 	return (
 		<header>
 			<div className="container">
-				<ColorMode />
 				<MenuIcon
 					sx={{ width: 24, height: 24, cursor: 'pointer' }}
+					className="mobile-menu-icon"
 					onClick={handleOpenMenu}
 				/>
 				<nav>
-					<WalletMultiButton />
+					<ColorMode />
+					<Button className="btn-gradient">Create Community</Button>
 				</nav>
 			</div>
 		</header>

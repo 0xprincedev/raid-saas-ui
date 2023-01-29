@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Button } from '@mui/material'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import Button from '@mui/material/Button'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { useWalletModal } from '@solana/wallet-adapter-react-ui'
 
@@ -9,6 +9,7 @@ import ColorMode from 'components/ColorMode'
 
 const Home = () => {
 	const [open, setOpen] = useState<boolean>(false)
+	const navigate = useNavigate()
 	const wallet = useWallet()
 	const { setVisible } = useWalletModal()
 
@@ -20,9 +21,17 @@ const Home = () => {
 		setOpen(true)
 	}
 
-	const handleBookRaid = () => {}
+	const handleBookRaid = () => {
+		navigate('/book-a-raid')
+	}
 
-	const handleCreateCommunity = () => {}
+	const handleCreateCommunity = () => {
+		navigate('/create-community')
+	}
+
+	const handleLogin = () => {
+		navigate('/dashboard')
+	}
 
 	return (
 		<main className="home">
@@ -32,12 +41,12 @@ const Home = () => {
 					<img src="/images/logo.png" alt="" />
 				</Link>
 				<ColorMode />
-				<Link to="/ " className="login">
+				<p className="login" onClick={handleLogin}>
 					Login
-				</Link>
-				<button className="btn-gradient create-community" onClick={handleCreateCommunity}>
+				</p>
+				<Button className="btn-gradient create-community" onClick={handleCreateCommunity}>
 					Create Community
-				</button>
+				</Button>
 			</nav>
 			<div className="content">
 				<div className="detail">
@@ -51,9 +60,9 @@ const Home = () => {
 						<Button className="btn-gradient start-raiding" onClick={handleStartRaiding}>
 							Start Raiding
 						</Button>
-						<button className="btn-border-gradient book-a-raid" onClick={handleBookRaid}>
+						<Button className="btn-border-gradient book-a-raid" onClick={handleBookRaid}>
 							<span className="btn__label">Book a Raid</span>
-						</button>
+						</Button>
 					</div>
 				</div>
 				<img src="/images/landing.png" alt="" className="landing-image" />

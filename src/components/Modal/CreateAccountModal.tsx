@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Lottie from 'react-lottie-player'
-import { Button, Modal } from '@mui/material'
+import Button from '@mui/material/Button'
+import Modal from '@mui/material/Modal'
 import TwitterIcon from '@mui/icons-material/Twitter'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { useWalletModal } from '@solana/wallet-adapter-react-ui'
@@ -16,6 +18,7 @@ interface Props {
 const CreateAccountModal = (props: Props) => {
 	const { open, closeModal } = props
 	const [currentStep, setCurrentStep] = useState<number>(0)
+	const navigate = useNavigate()
 	const wallet = useWallet()
 	const { setVisible } = useWalletModal()
 
@@ -43,7 +46,9 @@ const CreateAccountModal = (props: Props) => {
 		setCurrentStep(1)
 	}
 
-	const handleStartRaiding = () => {}
+	const handleStartRaiding = () => {
+		navigate('/dashboard')
+	}
 
 	const getTitleText = (_currentStep: number) => {
 		if (_currentStep === 1) {

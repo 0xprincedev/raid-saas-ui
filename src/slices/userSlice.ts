@@ -5,6 +5,7 @@ import { apiGetUserProfile } from 'utils/user'
 
 interface Props {
 	isMobileMenuOpen: boolean
+	colorMode: ColorMode
 	walletAddress: string
 	username?: string
 	twitterId: string
@@ -13,6 +14,7 @@ interface Props {
 
 const initialState: Props = {
 	isMobileMenuOpen: false,
+	colorMode: (localStorage.getItem('raid-saas-color-mode') as ColorMode) || 'light',
 	walletAddress: '',
 	username: '',
 	twitterId: '',
@@ -38,6 +40,9 @@ export const userSlice = createSlice({
 		setMobileMenuStatus: (state, action: PayloadAction<boolean>) => {
 			state.isMobileMenuOpen = action.payload
 		},
+		setColorMode: (state, action: PayloadAction<ColorMode>) => {
+			state.colorMode = action.payload
+		},
 		setWalletAddress: (state, action: PayloadAction<string>) => {
 			state.walletAddress = action.payload
 		},
@@ -51,6 +56,6 @@ export const userSlice = createSlice({
 	},
 })
 
-export const { setMobileMenuStatus, setWalletAddress } = userSlice.actions
+export const { setMobileMenuStatus, setColorMode, setWalletAddress } = userSlice.actions
 
 export default userSlice.reducer

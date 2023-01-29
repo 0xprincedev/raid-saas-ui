@@ -3,7 +3,8 @@ import { Route, Routes } from 'react-router-dom'
 import Home from 'pages/Home'
 import Dashboard from 'pages/Dashboard'
 import Communities from 'pages/Communities'
-import Community from 'pages/Communities/Community'
+import BookRaid from 'pages/BookRaid'
+import Profile from 'pages/Profile'
 
 const AppRoutes = () => {
 	return (
@@ -12,8 +13,9 @@ const AppRoutes = () => {
 			<Route path="/dashboard" element={<Dashboard />} />
 			<Route path="communities">
 				<Route index element={<Communities />} />
-				<Route path=":community" element={<Community />} />
 			</Route>
+			<Route path="/book-a-raid" element={<BookRaid />} />
+			<Route path="/profile" element={<Profile />} />
 		</Routes>
 	)
 }

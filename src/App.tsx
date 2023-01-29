@@ -17,36 +17,17 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import { mainnetRPC } from 'constant'
 import AppRoutes from 'routes'
+import useWindowSize from 'hooks/useWindowSize'
 import 'styles/app.scss'
+import { useAppSelector } from 'app/hooks'
+import { RootState } from 'app/store'
 
 const network = WalletAdapterNetwork.Mainnet
 const endpoint = mainnetRPC
-const theme = createTheme({
-	typography: {
-		button: {
-			textTransform: 'none',
-			fontFamily: 'Poppins',
-		},
-		fontFamily: 'Poppins',
-	},
-	breakpoints: {
-		values: {
-			xs: 576,
-			sm: 768,
-			md: 1024,
-			lg: 1280,
-			xl: 1536,
-		},
-	},
-	palette: {
-		mode: 'light',
-		primary: {
-			main: '#4D4D4D',
-		},
-	},
-})
 
 const App = () => {
+	const colorMode = useAppSelector((state: RootState) => state.userSlice.colorMode)
+
 	const wallets = useMemo(
 		() => [
 			new PhantomWalletAdapter(),
@@ -59,6 +40,38 @@ const App = () => {
 	const walletConnectionError = (error: WalletError) => {
 		console.log('Wallet Connection Error: ', error)
 	}
+
+	const windowSize = useWindowSize()
+
+	const theme = useMemo(
+		() =>
+			createTheme({
+				typography: {
+					button: {
+						textTransform: 'none',
+						fontFamily: 'Poppins',
+					},
+					fontFamily: 'Poppins',
+					fontSize: windowSize.width > 768 ? 14 : 12,
+				},
+				breakpoints: {
+					values: {
+						xs: 576,
+						sm: 768,
+						md: 1024,
+						lg: 1280,
+						xl: 1536,
+					},
+				},
+				palette: {
+					mode: colorMode,
+					primary: {
+						main: colorMode === 'light' ? '#4D4D4D' : '#A1A1A1',
+					},
+				},
+			}),
+		[colorMode, windowSize]
+	)
 
 	return (
 		<>
