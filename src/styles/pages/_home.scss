@@ -8,8 +8,9 @@ main.home {
   width: 100vw;
   height: 100vh;
   padding: 0 120px;
-  background-image: url('../../../public/images/background.png');
+  // background-image: url('../../../public/images/background.png');
   background-size: cover;
+  background-color: var(--white);
 
   nav {
     display: flex;

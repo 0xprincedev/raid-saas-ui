@@ -96,11 +96,11 @@
         }
 
         &.connect-twitter {
-          background-color: #1D9BF0;
+          background-color: var(--twitter);
         }
 
         &.connect-discord {
-          background-color: #5865F2;
+          background-color: var(--discord);
         }
 
         &.connect-wallet {
