@@ -25,3 +25,23 @@
   padding: 24px;
   background-color: var(--white);
 }
+
+.scrollbar {
+  &::-webkit-scrollbar {
+    width: 10px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: var(--dark-gray);
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--gray)
+  }
+}
