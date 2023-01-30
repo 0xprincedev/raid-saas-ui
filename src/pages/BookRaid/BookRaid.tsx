@@ -30,7 +30,7 @@ const BookRaid = () => {
 	}
 
 	return (
-		<MainLayout title="Book a raid" className="book-a-raid" sidebarType={1}>
+		<MainLayout title="Raid Saas - Book a raid" className="book-a-raid" sidebarType={1}>
 			<div className="container">
 				<div className="content-wrapper new-raid-campaign">
 					<div className="content">

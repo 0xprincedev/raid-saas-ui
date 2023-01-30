@@ -39,7 +39,7 @@ const Profile = () => {
 								<h6 className="text-primary">Average Engagement per Campaign</h6>
 								<div className="engagements">
 									{Object.keys(avgEngagements).map((key, index) => (
-										<div className="engagement">
+										<div className="engagement" key={index}>
 											<p>{key}</p>
 											<span>{(avgEngagements as any)[key].count}</span>
 											<div>

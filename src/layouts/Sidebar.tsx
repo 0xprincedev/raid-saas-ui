@@ -6,7 +6,6 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { useAppDispatch, useAppSelector } from 'app/hooks'
 import { RootState } from 'app/store'
 import { setMobileMenuStatus } from 'slices/userSlice'
-import UserInfoEditModal from 'components/Modal/UserInfoEditModal'
 
 const communities = [
 	{
@@ -45,7 +44,6 @@ interface Props {
 
 const Sidebar = ({ type }: Props) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false)
-	const [editModalOpen, setEditModalOpen] = useState<boolean>(false)
 	const { pathname } = useLocation()
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
@@ -72,10 +70,6 @@ const Sidebar = ({ type }: Props) => {
 
 	return (
 		<>
-			<UserInfoEditModal
-				open={editModalOpen}
-				closeModal={() => setEditModalOpen(false)}
-			/>
 			<aside className={`sidebar ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
 				<nav className="menu">
 					{type === 0 ? (
