@@ -26,7 +26,7 @@ const BookRaid = () => {
 	const [isFetching, setIsFetching] = useState<boolean>(false)
 
 	const handleBookRaid = (val: any) => {
-		console.log(val)
+		setIsFetching(true)
 	}
 
 	return (
