@@ -29,6 +29,22 @@ main.settings {
         }
       }
 
+      .billing-due {
+        display: grid;
+        gap: 8px;
+        font-size: 14px;
+        font-weight: 600;
+
+        >div {
+          display: flex;
+          align-items: center;
+
+          p {
+            width: 100px;
+          }
+        }
+      }
+
       h4 {
         color: var(--dark-gray)
       }
@@ -150,21 +166,26 @@ main.settings {
 
       section.manage-communities {
         margin-top: 40px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        column-gap: 24px;
-        row-gap: 64px;
+
 
         h4 {
           margin-bottom: 8px;
         }
 
-        >div {
+        .settings-group {
+          margin-top: 40px;
           display: flex;
-          flex-direction: column;
-          align-items: center;
-          flex-grow: 1;
+          flex-wrap: wrap;
+          justify-content: center;
+          column-gap: 24px;
+          row-gap: 64px;
+
+          >div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+          }
         }
 
         .community-settings {
