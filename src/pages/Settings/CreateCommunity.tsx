@@ -5,6 +5,7 @@ import Button from '@mui/material/Button'
 import MainLayout from 'layouts/MainLayout'
 import InputForm from 'components/Form/InputForm'
 import ImageDropzone from 'components/ImageDropzone'
+import { TextField } from '@mui/material'
 
 const CreateCommunity = () => {
 	const [status, setStatus] = useState<number>(0)
@@ -72,16 +73,43 @@ const CreateCommunity = () => {
 						</div>
 					) : (
 						<div className="settings">
-							<p className="settings__title">Community Settings</p>
-							<div className="settings__divider" />
 							<Form
 								onSubmit={handleCreateCommunity}
 								render={({ handleSubmit }) => (
 									<form onSubmit={handleSubmit}>
-										<Field name="name" label="Community Name">
-											{(props) => <InputForm {...props} />}
-										</Field>
-										<ImageDropzone defaultImage="/images/looties.png" setFile={setFile} />
+										<div className="community-settings">
+											<p className="settings__title">Community Settings</p>
+											<div className="settings__divider" />
+											<Field name="name" label="Community Name">
+												{(props) => <InputForm {...props} />}
+											</Field>
+											<ImageDropzone
+												defaultImage="/images/looties.png"
+												setFile={setFile}
+											/>
+											<div className="input-group">
+												<Field name="twitter" label="Twitter">
+													{(props) => <InputForm {...props} />}
+												</Field>
+												<Field name="discord" label="Discord">
+													{(props) => <InputForm {...props} />}
+												</Field>
+											</div>
+										</div>
+										<div className="collection-settings">
+											<p className="settings__title">Collection Settings</p>
+											<div className="settings__divider" />
+											<div className="mint-address">
+												<TextField
+													label="Mint Address"
+													placeholder="Address of any NFT from the collection"
+												/>
+												<Button>Verify</Button>
+											</div>
+										</div>
+										<Button type="submit" className="submit btn-gradient">
+											Submit
+										</Button>
 									</form>
 								)}
 							/>
