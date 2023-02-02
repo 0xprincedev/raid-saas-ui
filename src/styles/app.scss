@@ -8,7 +8,6 @@
 @import 'components/button';
 @import 'components/modal';
 @import 'components/loader';
-@import 'components/modal/userInfoEdit';
 @import 'components/raid';
 @import 'components/imageDropzone';
 @import 'components/totalView';
@@ -21,4 +20,7 @@
 
 @import 'pages/home';
 @import 'pages/dashboard';
+@import 'pages/settings';
 @import 'pages/bookRaid';
+@import 'pages/profile';
+@import 'pages/createCommunity';

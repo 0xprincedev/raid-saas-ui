@@ -25,3 +25,30 @@
   padding: 24px;
   background-color: var(--white);
 }
+
+.MuiModal-root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+
+.scrollbar {
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: var(--dark-gray);
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--gray)
+  }
+}

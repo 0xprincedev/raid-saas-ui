@@ -17,7 +17,7 @@ const MainLayout = ({ title, className, children, sidebarType = 0 }: MainLayoutP
 			</ReactHelmet>
 			<div className="main-layout">
 				<Sidebar type={sidebarType} />
-				<div className="main-content">
+				<div className="main-content scrollbar">
 					<Header />
 					<main className={className}>{children}</main>
 				</div>

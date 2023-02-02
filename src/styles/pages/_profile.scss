@@ -1,0 +1,210 @@
+@import 'styles/abstracts/mixin';
+
+main.profile {
+  .container {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 16px;
+
+    >div {
+      .profile {
+        .content {
+          margin-top: 16px;
+
+          .average-engagement {
+            width: fit-content;
+            padding: 20px;
+
+            h6 {
+              color: var(--dark-gray);
+            }
+
+            .engagements {
+              margin-top: 12px;
+              display: grid;
+              gap: 12px;
+
+              .engagement {
+                display: flex;
+                align-items: center;
+                font-size: 20px;
+
+                p {
+                  width: 140px;
+                  color: var(--gray);
+
+                  &::first-letter {
+                    text-transform: uppercase;
+                  }
+                }
+
+                span {
+                  width: 40px;
+                  color: var(--dark-gray)
+                }
+
+                >div {
+                  display: flex;
+                  gap: 1px;
+                  align-items: center;
+                  justify-content: center;
+                  width: 60px;
+                  font-size: 10px;
+
+                  color: var(--gray);
+
+                  svg {
+                    width: 16px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .campaign-history {
+        margin-top: 24px;
+        width: fit-content;
+
+        .content {
+          margin-top: 16px;
+          padding: 20px;
+
+          .button-group {
+            display: flex;
+            gap: 12px;
+
+            button {
+              border: 1px solid var(--gray-3);
+              border-radius: 999px;
+              width: 144px;
+              height: 40px;
+              font-size: 20px;
+              font-weight: 600;
+              color: var(--dark-gray);
+
+              &.active {
+                background-color: var(--gray-3);
+              }
+            }
+          }
+
+          .table {
+            overflow-x: auto;
+            max-width: calc(100vw - 76px);
+
+            table {
+              margin-top: 32px;
+              border-collapse: collapse;
+              border-spacing: 0 15px;
+              width: 704px;
+
+              thead {
+                font-size: 15px;
+                text-align: left;
+                color: var(--gray);
+
+                tr {
+                  height: 32px;
+                  border-bottom: 1px solid var(--gray-2);
+
+                  th {
+                    width: 100px;
+                    font-weight: 400;
+
+                    &:nth-child(1) {
+                      padding-left: 12px;
+                      width: 160px;
+                    }
+
+                    &:nth-child(2) {
+                      width: 144px;
+                    }
+                  }
+                }
+              }
+
+              tbody {
+                font-size: 20px;
+                color: var(--dark-gray);
+
+                tr {
+                  height: 60px;
+
+                  td {
+                    &:first-child {
+                      padding-left: 12px;
+
+                      >div {
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+
+                        span {
+                          font-size: 10px;
+                          color: var(--gray);
+                        }
+                      }
+
+                      p {
+                        font-size: 15px;
+                        color: var(--gray);
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    @include media-xl {
+      display: grid;
+    }
+
+    @include media-sm {
+      >div .campaign-history .content {
+        .button-group {
+          button {
+            width: 120px;
+            height: 32px;
+            font-size: 14px;
+          }
+        }
+
+        .table {
+          table {
+            thead {
+              font-size: 12px;
+
+              tr {
+                th {
+                  width: 60px;
+
+                  &:nth-child(1) {
+                    width: 100px;
+                  }
+
+                  &:nth-child(2) {
+                    width: 80px;
+                  }
+                }
+              }
+            }
+
+            tbody {
+              font-size: 14px;
+
+              tr {
+                height: 48px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

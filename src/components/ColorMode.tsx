@@ -7,7 +7,7 @@ import { setColorMode as setColorModeSlice } from 'slices/userSlice'
 
 const ColorMode = () => {
 	const [colorMode, setColorMode] = useState<ColorMode>(
-		(localStorage.getItem('raid-saas-color-mode') as ColorMode) || 'light'
+		(localStorage.getItem('raid-saas-color-mode') as ColorMode) || 'dark'
 	)
 	const dispatch = useAppDispatch()
 		dispatch(setColorModeSlice(colorMode))

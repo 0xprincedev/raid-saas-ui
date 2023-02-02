@@ -26,7 +26,7 @@ const Home = () => {
 	}
 
 	const handleCreateCommunity = () => {
-		navigate('/create-community')
+		navigate('/settings/create-community')
 	}
 
 	const handleLogin = () => {

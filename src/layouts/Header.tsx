@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import Button from '@mui/material/Button'
 import MenuIcon from '@mui/icons-material/Menu'
 
@@ -6,6 +7,7 @@ import { setMobileMenuStatus } from 'slices/userSlice'
 import ColorMode from 'components/ColorMode'
 
 const Header = () => {
+	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
 
 	const handleOpenMenu = () => {
@@ -23,7 +25,12 @@ const Header = () => {
 				/>
 				<nav>
 					<ColorMode />
-					<Button className="btn-gradient">Create Community</Button>
+					<Button
+						className="btn-gradient"
+						onClick={() => navigate('/settings/create-community')}
+					>
+						Create Community
+					</Button>
 				</nav>
 			</div>
 		</header>
