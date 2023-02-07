@@ -11,5 +11,16 @@ main.dashboard {
         }
       }
     }
+
+    .active-raids {
+      margin-top: 40px;
+
+      .content {
+        margin-top: 32px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+    }
   }
 }

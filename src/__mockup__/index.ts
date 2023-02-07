@@ -1,8 +1,12 @@
-export const topCommunities = [
-	{ name: 'y00ts', rank: 1, avgViews: 5000 },
-	{ name: 'DeGods', rank: 2, avgViews: 2000 },
-	{ name: 'Okay Bears', rank: 3, avgViews: 1760 },
-]
+export const topCommunities = {
+	title: 'Your Top Communities',
+	keys: ['Community', 'Global Rank', 'Avg Views'],
+	values: [
+		['y00ts', 1, 5000, 1, ''],
+		['DeGods', 4, 2000, -2, ''],
+		['Okay Bears', 7, 1760, 0, ''],
+	],
+}
 
 export const activeRaids = [
 	{
