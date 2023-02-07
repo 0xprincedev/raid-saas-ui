@@ -14,21 +14,22 @@ const TotalGraphView = ({ title, value, delta }: Props) => {
 		<div className="totalGraphView-component content-wrapper">
 			<h6 className="text-primary">{title}</h6>
 			<div className="chart-view">
-				<CircularProgressbar
-					value={value}
-					text={`${value}%`}
-					className="progressbar"
-					styles={{
-						path: {
-							stroke: '#F047FF',
-						},
-						text: {
-							fontSize: '24px',
-							fontWeight: 700,
-							fill: '#000',
-						},
-					}}
-				/>
+				<div>
+					<CircularProgressbar
+						value={value}
+						className="progressbar"
+						styles={{
+							path: {
+								stroke: '#F047FF',
+							},
+							text: {
+								fontSize: '24px',
+								fontWeight: 700,
+							},
+						}}
+					/>
+					<span>{value}%</span>
+				</div>
 				<span className="delta">
 					{delta < 0 ? (
 						<SouthIcon sx={{ color: '#C83838' }} fontSize="small" />

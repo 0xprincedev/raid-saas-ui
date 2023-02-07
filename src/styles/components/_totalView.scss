@@ -8,6 +8,9 @@
   }
 
   h2 {
+    color: var(--black);
+    line-height: 60px;
+
     span {
       font-size: 24px;
     }
@@ -26,6 +29,7 @@
       display: flex;
       align-items: center;
       height: fit-content;
+      color: var(--dark-gray);
     }
   }
 

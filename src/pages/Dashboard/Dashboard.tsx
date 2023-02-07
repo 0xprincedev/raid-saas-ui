@@ -1,6 +1,11 @@
 import MainLayout from 'layouts/MainLayout'
 import TotalView from 'components/TotalView'
 import TotalGraphView from 'components/TotalGraphView'
+import TotalTableView from 'components/TotalTableView'
+import Raid from 'components/Raid'
+
+import { topCommunities } from '__mockup__'
+import { activeRaids } from '__mockup__'
 
 const Dashboard = () => {
 	return (
@@ -24,7 +29,16 @@ const Dashboard = () => {
 								delta={7.5}
 							/>
 							<TotalGraphView title="Raid Success Rate" value={77} delta={7.5} />
+							<TotalTableView data={topCommunities} />
 						</div>
+					</div>
+				</div>
+				<div className="active-raids">
+					<h1 className="title text-gradient">Active Raids</h1>
+					<div className="content">
+						{activeRaids.map((raid) => (
+							<Raid data={raid} />
+						))}
 					</div>
 				</div>
 			</div>

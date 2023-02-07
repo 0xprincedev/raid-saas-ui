@@ -1,0 +1,85 @@
+.totalTableView-component {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  width: 330px;
+  height: 200px;
+
+  h6 {
+    color: var(--dark-gray);
+  }
+
+  table {
+    thead {
+      font-size: 10px;
+      color: var(--gray);
+
+      tr {
+        th {
+          height: 16px;
+          font-weight: 400;
+
+          &:first-child {
+            width: 120px;
+            text-align: left;
+          }
+
+          &:nth-child(2) {
+            width: 80px;
+          }
+        }
+      }
+    }
+
+    tbody {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--dark-gray);
+
+      tr {
+        td {
+          height: 36px;
+
+          &:not(:nth-child(1)) {
+            text-align: center;
+          }
+
+          &:nth-child(2) {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            p {
+              position: relative;
+              width: fit-content;
+
+              span {
+                position: absolute;
+                top: 0;
+                right: 0;
+                transform: translateX(100%);
+                font-size: 8px;
+
+                &.up {
+                  color: var(--success);
+                }
+
+                &.down {
+                  color: var(--danger);
+                }
+              }
+            }
+          }
+
+          &:nth-child(3) {
+            span {
+              font-size: 8px;
+              color: var(--gray);
+            }
+          }
+        }
+      }
+    }
+  }
+}
