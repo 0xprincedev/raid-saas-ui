@@ -46,7 +46,11 @@ const BookRaid = () => {
 											<Field name="budget" label="Budget">
 												{(props) => <SelectForm data={budgets} {...props} />}
 											</Field>
-											<Field name="community" label="Community">
+											<Field
+												name="community"
+												label="Community"
+												helperText="Desired community to raid your tweet"
+											>
 												{(props) => <SelectForm data={communities} {...props} />}
 											</Field>
 										</div>
