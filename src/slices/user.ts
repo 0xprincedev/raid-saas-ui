@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-import { apiGetUserProfile } from 'utils/user'
+import { apiGetUserProfile } from 'utils/auth'
 
 interface Props {
 	isMobileMenuOpen: boolean
@@ -22,7 +22,7 @@ const initialState: Props = {
 }
 
 export const getUserProfile = createAsyncThunk(
-	'userSlice/getUserProfile',
+	'user/getUserProfile',
 	async (walletAddress: string) => {
 		try {
 			const res = await apiGetUserProfile(walletAddress)
@@ -33,8 +33,8 @@ export const getUserProfile = createAsyncThunk(
 	}
 )
 
-export const userSlice = createSlice({
-	name: 'userSlice',
+export const user = createSlice({
+	name: 'user',
 	initialState,
 	reducers: {
 		setMobileMenuStatus: (state, action: PayloadAction<boolean>) => {
@@ -56,6 +56,6 @@ export const userSlice = createSlice({
 	},
 })
 
-export const { setMobileMenuStatus, setColorMode, setWalletAddress } = userSlice.actions
+export const { setMobileMenuStatus, setColorMode, setWalletAddress } = user.actions
 
-export default userSlice.reducer
+export default user.reducer

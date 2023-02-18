@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Button from '@mui/material/Button'
-import { useWallet } from '@solana/wallet-adapter-react'
-import { useWalletModal } from '@solana/wallet-adapter-react-ui'
 
 import CreateAccountModal from 'components/Modal/CreateAccountModal'
 import ColorMode from 'components/ColorMode'
@@ -10,14 +8,8 @@ import ColorMode from 'components/ColorMode'
 const Home = () => {
 	const [open, setOpen] = useState<boolean>(false)
 	const navigate = useNavigate()
-	const wallet = useWallet()
-	const { setVisible } = useWalletModal()
 
 	const handleStartRaiding = () => {
-		if (!wallet.publicKey) {
-			setVisible(true)
-			return
-		}
 		setOpen(true)
 	}
 

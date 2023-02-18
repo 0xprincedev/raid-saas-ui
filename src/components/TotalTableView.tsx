@@ -19,8 +19,8 @@ const TotalTableView = ({ data }: Props) => {
 					</tr>
 				</thead>
 				<tbody>
-					{data.values.map((value) => (
-						<tr>
+					{data.values.map((value, index) => (
+						<tr key={index}>
 							<td>{value[0]}</td>
 							<td>
 								<p>

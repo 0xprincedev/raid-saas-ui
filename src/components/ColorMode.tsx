@@ -3,7 +3,7 @@ import LightModeIcon from '@mui/icons-material/LightMode'
 import DarkModeIcon from '@mui/icons-material/DarkMode'
 
 import { useAppDispatch } from 'app/hooks'
-import { setColorMode as setColorModeSlice } from 'slices/userSlice'
+import { setColorMode as setColorModeSlice } from 'slices/user'
 
 const ColorMode = () => {
 	const [colorMode, setColorMode] = useState<ColorMode>(

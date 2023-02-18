@@ -5,7 +5,7 @@ const Loading = () => {
 		<Box
 			sx={{
 				position: 'fixed',
-				zIndex: 1000,
+				zIndex: 2000,
 				top: 0,
 				left: 0,
 				display: 'flex',

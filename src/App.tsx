@@ -26,7 +26,7 @@ const network = WalletAdapterNetwork.Mainnet
 const endpoint = mainnetRPC
 
 const App = () => {
-	const colorMode = useAppSelector((state: RootState) => state.userSlice.colorMode)
+	const colorMode = useAppSelector((state: RootState) => state.user.colorMode)
 
 	const wallets = useMemo(
 		() => [
@@ -87,7 +87,7 @@ const App = () => {
 			</ConnectionProvider>
 			<ToastContainer
 				autoClose={2000}
-				theme="light"
+				theme={colorMode}
 				pauseOnFocusLoss={false}
 				pauseOnHover={false}
 			/>
