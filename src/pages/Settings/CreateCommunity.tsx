@@ -1,21 +1,52 @@
-import { useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { Field, Form } from 'react-final-form'
-import Button from '@mui/material/Button'
+import { Box, Button, Stack, TextField, Typography } from '@mui/material'
+import { LoadingButton } from '@mui/lab'
+import { useConnection } from '@solana/wallet-adapter-react'
+import { PublicKey } from '@solana/web3.js'
+import { Metaplex } from '@metaplex-foundation/js'
+import { HyperspaceClient } from 'hyperspace-client-js'
 
+import { HYPERSPACE_API_KEY } from 'config'
 import MainLayout from 'layouts/MainLayout'
 import InputForm from 'components/Form/InputForm'
-import ImageDropzone from 'components/ImageDropzone'
-import { TextField } from '@mui/material'
+
+const hsClient = new HyperspaceClient(HYPERSPACE_API_KEY)
 
 const CreateCommunity = () => {
 	const [status, setStatus] = useState<number>(0)
 	const [file, setFile] = useState<any>(null)
+	const [mintAddress, setMintAddress] = useState<string>('')
+	const [isFetchingNFTData, setIsFetchingNFTData] = useState<boolean>(false)
+	const ref = useRef<any>(null)
+	const { connection } = useConnection()
+	const metaplex = useMemo(() => new Metaplex(connection), [connection])
 
 	const handleClick = () => {
 		setStatus(1)
 	}
 
-	const handleCreateCommunity = () => {}
+	const handleCreateCommunity = (val: any) => {
+		const { name, twitter, discord } = val
+		console.log(name, twitter, discord)
+	}
+
+	const handleVerifyMintAddress = async () => {
+		setIsFetchingNFTData(true)
+		try {
+			const NFT = await metaplex.nfts().findByMint({
+				mintAddress: new PublicKey(mintAddress),
+			})
+			const creatorAddress = NFT.creators[0].address.toString()
+			const data = await hsClient.getProjects({
+				condition: { projectIds: [creatorAddress] },
+			})
+			console.log(data)
+		} catch (err) {
+			console.log(err)
+		}
+		setIsFetchingNFTData(false)
+	}
 
 	return (
 		<MainLayout title="Raid Saas - Create Community" className="create-community">
@@ -81,18 +112,49 @@ const CreateCommunity = () => {
 											<p className="settings__title">Community Settings</p>
 											<div className="settings__divider" />
 											<Field name="name" label="Community Name">
-												{(props) => <InputForm {...props} />}
+												{(props) => <InputForm required {...props} />}
 											</Field>
-											<ImageDropzone
-												defaultImage="/images/looties.png"
-												setFile={setFile}
-											/>
+											<Stack direction="row" spacing={4} sx={{ alignItems: 'center' }}>
+												{file ? (
+													<img
+														src={URL.createObjectURL(file)}
+														alt=""
+														style={{ borderRadius: 4, width: 60, height: 60 }}
+													/>
+												) : (
+													<Box
+														sx={{
+															border: 1,
+															borderStyle: 'dashed',
+															borderRadius: 1,
+															width: 60,
+															height: 60,
+														}}
+													/>
+												)}
+												<Stack spacing={0.75} sx={{ alignItems: 'center' }}>
+													<Button className="upload" onClick={() => ref.current.click()}>
+														Upload
+													</Button>
+													<Typography sx={{ fontSize: 10 }}>
+														50x50 px Recommended
+													</Typography>
+												</Stack>
+												<input
+													type="file"
+													onChange={(e) => {
+														e.target.files?.[0] && setFile(e.target.files?.[0])
+													}}
+													style={{ display: 'none' }}
+													ref={ref}
+												/>
+											</Stack>
 											<div className="input-group">
 												<Field name="twitter" label="Twitter">
-													{(props) => <InputForm {...props} />}
+													{(props) => <InputForm required {...props} />}
 												</Field>
 												<Field name="discord" label="Discord">
-													{(props) => <InputForm {...props} />}
+													{(props) => <InputForm required {...props} />}
 												</Field>
 											</div>
 										</div>
@@ -103,8 +165,14 @@ const CreateCommunity = () => {
 												<TextField
 													label="Mint Address"
 													placeholder="Address of any NFT from the collection"
+													onChange={(e) => setMintAddress(e.target.value)}
 												/>
-												<Button>Verify</Button>
+												<LoadingButton
+													loading={isFetchingNFTData}
+													onClick={handleVerifyMintAddress}
+												>
+													Verify
+												</LoadingButton>
 											</div>
 										</div>
 										<Button type="submit" className="submit btn-gradient">

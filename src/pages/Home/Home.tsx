@@ -1,28 +1,52 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Button from '@mui/material/Button'
+import { useWallet } from '@solana/wallet-adapter-react'
+import { useWalletModal } from '@solana/wallet-adapter-react-ui'
 
+import { login } from 'utils/user'
 import CreateAccountModal from 'components/Modal/CreateAccountModal'
 import ColorMode from 'components/ColorMode'
 
 const Home = () => {
 	const [open, setOpen] = useState<boolean>(false)
 	const navigate = useNavigate()
+	const wallet = useWallet()
+	const { setVisible } = useWalletModal()
+	const walletAddress = useMemo(() => wallet.publicKey?.toString() || '', [wallet])
 
 	const handleStartRaiding = () => {
 		setOpen(true)
 	}
 
-	const handleBookRaid = () => {
-		navigate('/book-a-raid')
+	const handleBookRaid = async () => {
+		if (!wallet.publicKey) {
+			setVisible(true)
+			return
+		}
+		if (await login(walletAddress)) {
+			navigate('/book-a-raid')
+		}
 	}
 
-	const handleCreateCommunity = () => {
-		navigate('/settings/create-community')
+	const handleCreateCommunity = async () => {
+		if (!wallet.publicKey) {
+			setVisible(true)
+			return
+		}
+		if (await login(walletAddress)) {
+			navigate('/settings/create-community')
+		}
 	}
 
-	const handleLogin = () => {
-		navigate('/dashboard')
+	const handleLogin = async () => {
+		if (!wallet.publicKey) {
+			setVisible(true)
+			return
+		}
+		if (await login(walletAddress)) {
+			navigate('/dashboard')
+		}
 	}
 
 	return (

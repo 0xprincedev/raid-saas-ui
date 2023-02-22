@@ -12,3 +12,5 @@ export const tweet = {
 	description:
 		'Just picked up a new DeGod! LFG! Bought it because it reminded me of an Azuki. LFG!',
 }
+
+export const HYPERSPACE_API_KEY = process.env.REACT_APP_HYPERSPACE_API_KEY || ''
