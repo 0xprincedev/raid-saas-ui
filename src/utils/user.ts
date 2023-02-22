@@ -1,20 +1,14 @@
-import axios from 'axios'
+import { toast } from 'react-toastify'
+import axios from 'utils/axios'
 
-export const apiGetUserProfile = async (walletAddress: string) => {
+export const login = async (walletAddress: string) => {
 	try {
-		const res = await axios.get(`/user/${walletAddress}`)
-		return res.data.user
+		const { data } = await axios.post('/user/login', { walletAddress })
+		localStorage.setItem('token', data.token)
+		localStorage.setItem('user', data.user)
+		return true
 	} catch (err: any) {
-		throw Error(err)
-	}
-}
-
-export const apiUpdateUserProfile = async (profile: any) => {
-	try {
-		await axios.put('/user', {
-			...profile,
-		})
-	} catch (err: any) {
-		throw Error(err)
+		toast.error(err.message)
+		return false
 	}
 }

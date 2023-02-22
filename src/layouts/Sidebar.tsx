@@ -5,7 +5,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
 import { useAppDispatch, useAppSelector } from 'app/hooks'
 import { RootState } from 'app/store'
-import { setMobileMenuStatus } from 'slices/userSlice'
+import { setMobileMenuStatus } from 'slices/user'
 
 const communities = [
 	{
@@ -49,7 +49,7 @@ const Sidebar = ({ type }: Props) => {
 	const dispatch = useAppDispatch()
 
 	const isMobileMenuOpen = useAppSelector(
-		(state: RootState) => state.userSlice.isMobileMenuOpen
+		(state: RootState) => state.user.isMobileMenuOpen
 	)
 
 	useEffect(() => {

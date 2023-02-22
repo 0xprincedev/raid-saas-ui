@@ -3,7 +3,7 @@ import Button from '@mui/material/Button'
 import MenuIcon from '@mui/icons-material/Menu'
 
 import { useAppDispatch } from 'app/hooks'
-import { setMobileMenuStatus } from 'slices/userSlice'
+import { setMobileMenuStatus } from 'slices/user'
 import ColorMode from 'components/ColorMode'
 
 const Header = () => {

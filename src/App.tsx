@@ -15,18 +15,19 @@ import { ThemeProvider, createTheme } from '@mui/material/styles'
 import '@solana/wallet-adapter-react-ui/styles.css'
 import 'react-toastify/dist/ReactToastify.css'
 
-import { mainnetRPC } from 'constant'
-import AppRoutes from 'routes'
-import useWindowSize from 'hooks/useWindowSize'
-import 'styles/app.scss'
 import { useAppSelector } from 'app/hooks'
 import { RootState } from 'app/store'
+import { mainnetRPC } from 'constant'
+import useWindowSize from 'hooks/useWindowSize'
+import AppRoutes from 'routes'
+import Loading from 'components/Loading'
+import 'styles/app.scss'
 
 const network = WalletAdapterNetwork.Mainnet
 const endpoint = mainnetRPC
 
 const App = () => {
-	const colorMode = useAppSelector((state: RootState) => state.userSlice.colorMode)
+	const colorMode = useAppSelector((state: RootState) => state.user.colorMode)
 
 	const wallets = useMemo(
 		() => [
@@ -56,7 +57,7 @@ const App = () => {
 				},
 				breakpoints: {
 					values: {
-						xs: 576,
+						xs: 0,
 						sm: 768,
 						md: 1024,
 						lg: 1280,
@@ -87,10 +88,11 @@ const App = () => {
 			</ConnectionProvider>
 			<ToastContainer
 				autoClose={2000}
-				theme="light"
+				theme={colorMode}
 				pauseOnFocusLoss={false}
 				pauseOnHover={false}
 			/>
+			<Loading />
 		</>
 	)
 }

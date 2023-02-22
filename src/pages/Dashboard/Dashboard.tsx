@@ -36,8 +36,8 @@ const Dashboard = () => {
 				<div className="active-raids">
 					<h1 className="title text-gradient">Active Raids</h1>
 					<div className="content">
-						{activeRaids.map((raid) => (
-							<Raid data={raid} />
+						{activeRaids.map((raid, index) => (
+							<Raid data={raid} key={index} />
 						))}
 					</div>
 				</div>

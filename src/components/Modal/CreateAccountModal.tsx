@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import Lottie from 'react-lottie-player'
 import Button from '@mui/material/Button'
 import Modal from '@mui/material/Modal'
@@ -7,6 +8,7 @@ import TwitterIcon from '@mui/icons-material/Twitter'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { useWalletModal } from '@solana/wallet-adapter-react-ui'
 
+import axios from 'utils/axios'
 import { checked1 } from 'config/lottie'
 import { ReactComponent as DiscordIcon } from 'icons/discord.svg'
 
@@ -22,10 +24,20 @@ const CreateAccountModal = (props: Props) => {
 	const wallet = useWallet()
 	const { setVisible } = useWalletModal()
 
-	const handleClose = () => {
-		if (!window.confirm('Are you sure you want to cancel creating account?')) {
-			return
+	const onSignUp = async () => {
+		if (!wallet.publicKey) return
+		try {
+			const { data } = await axios.post('/user/register', {
+				walletAddress: wallet.publicKey.toString(),
+			})
+			toast.success(data.message)
+			setCurrentStep(3)
+		} catch (err: any) {
+			toast.error(err.message)
 		}
+	}
+
+	const handleClose = () => {
 		closeModal()
 		setCurrentStep(0)
 	}
@@ -35,7 +47,7 @@ const CreateAccountModal = (props: Props) => {
 	}
 
 	const handleConnectDiscord = () => {
-		setCurrentStep(3)
+		onSignUp()
 	}
 
 	const handleConnectWallet = () => {
