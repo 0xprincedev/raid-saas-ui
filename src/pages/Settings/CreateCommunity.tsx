@@ -1,15 +1,19 @@
 import { useMemo, useRef, useState } from 'react'
 import { Field, Form } from 'react-final-form'
+import { toast } from 'react-toastify'
 import { Box, Button, Stack, TextField, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import { useConnection } from '@solana/wallet-adapter-react'
-import { PublicKey } from '@solana/web3.js'
 import { Metaplex } from '@metaplex-foundation/js'
 import { HyperspaceClient } from 'hyperspace-client-js'
 
 import { HYPERSPACE_API_KEY } from 'config'
+import { getNFTCollectionData } from 'utils/solana'
+import axios from 'utils/axios'
+import { convertToBase64 } from 'utils'
 import MainLayout from 'layouts/MainLayout'
 import InputForm from 'components/Form/InputForm'
+import { getUserInformation } from 'utils/user'
 
 const hsClient = new HyperspaceClient(HYPERSPACE_API_KEY)
 
@@ -18,32 +22,84 @@ const CreateCommunity = () => {
 	const [file, setFile] = useState<any>(null)
 	const [mintAddress, setMintAddress] = useState<string>('')
 	const [isFetchingNFTData, setIsFetchingNFTData] = useState<boolean>(false)
+	const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
+	const [collectionData, setCollectionData] = useState({
+		plan: '',
+		creatorAddress: '',
+		collectionName: '',
+		mintCount: 0,
+	})
 	const ref = useRef<any>(null)
 	const { connection } = useConnection()
 	const metaplex = useMemo(() => new Metaplex(connection), [connection])
 
-	const handleClick = () => {
+	const handleClick = (arg: string) => {
 		setStatus(1)
+		setCollectionData((prev) => ({ ...prev, plan: arg }))
 	}
 
-	const handleCreateCommunity = (val: any) => {
+	const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (!e.target.files?.[0]) return
+
+		const _file = e.target.files?.[0]
+
+		if (_file.size > 1024 * 100) {
+			return toast.warning('Maximum logo size is 100kb!')
+		}
+
+		setFile(_file)
+	}
+
+	const handleCreateCommunity = async (val: any) => {
 		const { name, twitter, discord } = val
-		console.log(name, twitter, discord)
+
+		if (file === null) {
+			return toast.error('Please upload the logo of your community')
+		}
+
+		if (collectionData.creatorAddress === '' || collectionData.mintCount === 0) {
+			return toast.error('Please verify your NFT collection first')
+		}
+
+		setIsSubmitting(true)
+
+		const user = getUserInformation()
+		const logo = await convertToBase64(file)
+
+		try {
+			await axios.post('/community', {
+				userId: user._id,
+				name,
+				logo,
+				twitter,
+				discord,
+				...collectionData,
+			})
+		} catch (err: any) {
+			console.log(err)
+			toast.error(err.response?.data?.message || err.message)
+		}
+
+		setIsSubmitting(false)
 	}
 
 	const handleVerifyMintAddress = async () => {
 		setIsFetchingNFTData(true)
 		try {
-			const NFT = await metaplex.nfts().findByMint({
-				mintAddress: new PublicKey(mintAddress),
-			})
-			const creatorAddress = NFT.creators[0].address.toString()
-			const data = await hsClient.getProjects({
-				condition: { projectIds: [creatorAddress] },
-			})
-			console.log(data)
-		} catch (err) {
+			const { creatorAddress, mintCount, collectionName } = await getNFTCollectionData(
+				mintAddress,
+				metaplex,
+				hsClient
+			)
+			setCollectionData((prev) => ({
+				...prev,
+				creatorAddress,
+				mintCount,
+				collectionName,
+			}))
+		} catch (err: any) {
 			console.log(err)
+			toast.error('Error while fetching NFT collection data')
 		}
 		setIsFetchingNFTData(false)
 	}
@@ -75,7 +131,7 @@ const CreateCommunity = () => {
 										<b>0.59 SOL</b> for every 1K NFTs in your collection <b>per Month</b>
 									</p>
 									<Button className="btn-border-gradient">
-										<span className="btn__label" onClick={handleClick}>
+										<span className="btn__label" onClick={() => handleClick('monthly')}>
 											Try for Free
 										</span>
 									</Button>
@@ -95,7 +151,7 @@ const CreateCommunity = () => {
 										<b>Unlimited NFTs</b> in your collection <b>30 SOL</b> billed annually
 									</p>
 									<Button className="btn-border-gradient">
-										<span className="btn__label" onClick={handleClick}>
+										<span className="btn__label" onClick={() => handleClick('annual')}>
 											Try for Free
 										</span>
 									</Button>
@@ -142,9 +198,7 @@ const CreateCommunity = () => {
 												</Stack>
 												<input
 													type="file"
-													onChange={(e) => {
-														e.target.files?.[0] && setFile(e.target.files?.[0])
-													}}
+													onChange={handleChangeFile}
 													style={{ display: 'none' }}
 													ref={ref}
 												/>
@@ -174,10 +228,22 @@ const CreateCommunity = () => {
 													Verify
 												</LoadingButton>
 											</div>
+											{collectionData.creatorAddress !== '' &&
+												collectionData.mintCount !== 0 && (
+													<div>
+														Collection Name: {collectionData.collectionName}
+														<br />
+														Supply: {collectionData.mintCount.toLocaleString()}
+													</div>
+												)}
 										</div>
-										<Button type="submit" className="submit btn-gradient">
+										<LoadingButton
+											type="submit"
+											className="submit btn-gradient"
+											loading={isSubmitting}
+										>
 											Submit
-										</Button>
+										</LoadingButton>
 									</form>
 								)}
 							/>
