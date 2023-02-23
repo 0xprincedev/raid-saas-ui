@@ -1,18 +1,15 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Field, Form } from 'react-final-form'
+import { toast } from 'react-toastify'
 import LoadingButton from '@mui/lab/LoadingButton'
 
+import axios from 'utils/axios'
+import { budgets } from 'config'
 import MainLayout from 'layouts/MainLayout'
 import InputForm from 'components/Form/InputForm'
 import SelectForm from 'components/Form/SelectForm'
 import TopCommunities from 'components/TopCommunities'
-
-const budgets = [
-	{ value: 0.5, name: '0.5 SOL' },
-	{ value: 0.5, name: '0.5 SOL' },
-	{ value: 0.5, name: '0.5 SOL' },
-	{ value: 0.5, name: '0.5 SOL' },
-]
 
 const communities = [
 	{ value: -1, name: 'All' },
@@ -24,6 +21,19 @@ const communities = [
 
 const BookRaid = () => {
 	const [isFetching, setIsFetching] = useState<boolean>(false)
+	const [communities, setCommunities] = useState([])
+	const navigate = useNavigate()
+
+	useEffect(() => {
+		// axios
+		// 	.post('/')
+		// 	.then(() => {})
+		// 	.catch((err) => {
+		// 		console.log(err)
+		// 		toast.error(err.message)
+		// 		navigate('/')
+		// 	})
+	}, []) //eslint-disable-line
 
 	const handleBookRaid = (val: any) => {
 		setIsFetching(true)
