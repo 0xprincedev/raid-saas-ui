@@ -1,3 +1,5 @@
+import { toast } from 'react-toastify'
+
 export const shortenAddress = (address: string | undefined) => {
 	if (address) {
 		return address.slice(0, 5) + '...' + address.slice(-4)
@@ -16,4 +18,18 @@ export const convertToBase64 = (file: any) => {
 			reject(error)
 		}
 	})
+}
+
+export const errorToast = (err: any) => {
+	console.log(err)
+	toast.error(err?.response?.data?.message || err?.data?.message || err?.message)
+}
+
+export const removeSpaceAndSplit = (arg: string) => {
+	const _words = arg.replaceAll(' ', '').split(',')
+	if (arg[arg.length - 1] === ',') _words.pop()
+
+	const words = _words.filter((word) => word !== '')
+
+	return words
 }

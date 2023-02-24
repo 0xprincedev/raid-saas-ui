@@ -16,3 +16,12 @@ export const login = async (walletAddress: string) => {
 export const getUserInformation = () => {
 	return JSON.parse(localStorage.getItem('user') || '')
 }
+
+export const getCommunities = async (walletAddress: string) => {
+	try {
+		const { data } = await axios.post('/user/getCommunities', { walletAddress })
+		return data.communities
+	} catch (err: any) {
+		throw Error(err)
+	}
+}

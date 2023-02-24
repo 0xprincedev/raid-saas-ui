@@ -4,7 +4,7 @@ import { useWallet } from '@solana/wallet-adapter-react'
 
 import axios from 'utils/axios'
 import { useAppDispatch } from 'app/hooks'
-import { setLoadingStatus } from 'slices/user'
+import { getCommunities, setLoadingStatus } from 'slices/user'
 
 const Initialize = () => {
 	const { pathname } = useLocation()
@@ -23,6 +23,12 @@ const Initialize = () => {
 			.catch(() => navigate('/'))
 			.finally(() => dispatch(setLoadingStatus(false)))
 	}, [pathname]) //eslint-disable-line
+
+	useEffect(() => {
+		if (!wallet.publicKey) return
+		dispatch(getCommunities(wallet.publicKey.toString()))
+	}, [wallet.publicKey, dispatch])
+
 	return <></>
 }
 
