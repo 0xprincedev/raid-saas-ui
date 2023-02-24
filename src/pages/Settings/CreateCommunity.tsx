@@ -1,4 +1,5 @@
 import { useMemo, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Field, Form } from 'react-final-form'
 import { toast } from 'react-toastify'
 import { Box, Button, Stack, TextField, Typography } from '@mui/material'
@@ -32,6 +33,7 @@ const CreateCommunity = () => {
 	const ref = useRef<any>(null)
 	const { connection } = useConnection()
 	const metaplex = useMemo(() => new Metaplex(connection), [connection])
+	const navigate = useNavigate()
 
 	const handleClick = (arg: string) => {
 		setStatus(1)
@@ -75,6 +77,8 @@ const CreateCommunity = () => {
 				discord,
 				...collectionData,
 			})
+			toast.success('Successfully created a new community!')
+			navigate('/dashboard')
 		} catch (err: any) {
 			console.log(err)
 			toast.error(err.response?.data?.message || err.message)
