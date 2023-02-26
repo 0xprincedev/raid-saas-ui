@@ -47,6 +47,7 @@ const SelectForm = (props: Props) => {
 				required={required}
 				onChange={handleInputChange}
 			>
+				<MenuItem></MenuItem>
 				{data?.map((item, index) => (
 					<MenuItem value={item.value} key={index}>
 						{item.name}
