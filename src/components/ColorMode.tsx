@@ -10,7 +10,13 @@ const ColorMode = () => {
 		(localStorage.getItem('raid-saas-color-mode') as ColorMode) || 'dark'
 	)
 	const dispatch = useAppDispatch()
-		dispatch(setColorModeSlice(colorMode))
+
+	useEffect(() => {
+		if (dispatch) {
+			localStorage.setItem('raid-saas-color-mode', colorMode)
+			document.body.className = colorMode
+			dispatch(setColorModeSlice(colorMode))
+		}
 	}, [colorMode, dispatch])
 
 	return colorMode === 'light' ? (

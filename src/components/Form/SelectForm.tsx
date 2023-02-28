@@ -13,7 +13,7 @@ interface Props {
 	name?: string
 	placeholder?: string
 	required?: boolean
-	data: Record<string, string | number>[]
+	data?: Record<string, any>[]
 	pipe?: (arg: string | number) => void
 }
 
@@ -47,7 +47,8 @@ const SelectForm = (props: Props) => {
 				required={required}
 				onChange={handleInputChange}
 			>
-				{data.map((item, index) => (
+				<MenuItem></MenuItem>
+				{data?.map((item, index) => (
 					<MenuItem value={item.value} key={index}>
 						{item.name}
 					</MenuItem>

@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
+import { getCommunities as apiGetCommunities } from 'utils/user'
+
 interface Props {
 	isMobileMenuOpen: boolean
 	colorMode: ColorMode
@@ -15,10 +17,17 @@ const initialState: Props = {
 	communities: [],
 }
 
-export const getCommunities = createAsyncThunk('user/getCommunities', async () => {
-	let res = [{}]
-	return res
-})
+export const getCommunities = createAsyncThunk(
+	'user/getCommunities',
+	async (walletAddress: string) => {
+		try {
+			const res = await apiGetCommunities(walletAddress)
+			return res
+		} catch (err: any) {
+			throw Error(err)
+		}
+	}
+)
 
 export const user = createSlice({
 	name: 'user',
@@ -35,12 +44,9 @@ export const user = createSlice({
 		},
 	},
 	extraReducers: (builder) => {
-		builder.addCase(
-			getCommunities.fulfilled,
-			(state, action: PayloadAction<Record<string, any>[]>) => {
-				state.communities = action.payload
-			}
-		)
+		builder.addCase(getCommunities.fulfilled, (state, action: PayloadAction<any>) => {
+			state.communities = action.payload
+		})
 	},
 })
 

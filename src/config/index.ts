@@ -22,3 +22,41 @@ export const budgets = [
 	{ value: 10, name: '10 SOL' },
 	{ value: 15, name: '15 SOL' },
 ]
+
+export const raidBreakdown = {
+	1.5: {
+		fcfs: { amount: 65, value: 0.02 },
+		additional: {
+			amount: 100,
+			value: 0.002,
+		},
+	},
+	3: {
+		fcfs: { amount: 130, value: 0.02 },
+		additional: {
+			amount: 200,
+			value: 0.002,
+		},
+	},
+	5: {
+		fcfs: { amount: 217, value: 0.02 },
+		additional: {
+			amount: 333,
+			value: 0.002,
+		},
+	},
+	10: {
+		fcfs: { amount: 433, value: 0.02 },
+		additional: {
+			amount: 667,
+			value: 0.002,
+		},
+	},
+	15: {
+		fcfs: { amount: 650, value: 0.02 },
+		additional: {
+			amount: 1000,
+			value: 0.002,
+		},
+	},
+}
