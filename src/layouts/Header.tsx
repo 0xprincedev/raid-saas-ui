@@ -17,6 +17,7 @@ const Header = () => {
 	return (
 		<header>
 			<div className="container">
+				<ColorMode />
 				<MenuIcon
 					sx={{ width: 24, height: 24, cursor: 'pointer' }}
 					className="mobile-menu-icon"
