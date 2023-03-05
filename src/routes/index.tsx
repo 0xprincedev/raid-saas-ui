@@ -1,6 +1,5 @@
 import { useEffect, useMemo } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { useWallet } from '@solana/wallet-adapter-react'
 import { useWalletModal } from '@solana/wallet-adapter-react-ui'
 import { useSelector } from 'react-redux'
 
@@ -42,9 +41,8 @@ const RequireAuth = ({ children }: Props) => {
 	}
 
 	useEffect(() => {
-		console.log(solana._publicKey)
 		handleLogin()
-	}, [solana])
+	}, [solana]) // eslint-disable-line
 
 	return logined === true ? children : <Navigate to="/" replace />
 }
