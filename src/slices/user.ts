@@ -2,12 +2,14 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 import { getCommunities as apiGetCommunities } from 'utils/user'
-
+import { login as apiLogin } from 'utils/user'
+import { saveToLocalStorage } from 'utils'
 interface Props {
 	isMobileMenuOpen: boolean
 	colorMode: ColorMode
 	isLoading: boolean
 	communities: Record<string, any>[]
+	user: Record<string, any>
 }
 
 const initialState: Props = {
@@ -15,7 +17,20 @@ const initialState: Props = {
 	colorMode: (localStorage.getItem('raid-saas-color-mode') as ColorMode) || 'light',
 	isLoading: false,
 	communities: [],
+	user: {
+		avatar: '/images/avatar.png',
+		walletAddress: [],
+	},
 }
+
+export const login = createAsyncThunk('user/login', async (walletAddress: string) => {
+	try {
+		const data = await apiLogin(walletAddress)
+		return data
+	} catch (err: any) {
+		throw Error(err)
+	}
+})
 
 export const getCommunities = createAsyncThunk(
 	'user/getCommunities',
@@ -46,6 +61,19 @@ export const user = createSlice({
 	extraReducers: (builder) => {
 		builder.addCase(getCommunities.fulfilled, (state, action: PayloadAction<any>) => {
 			state.communities = action.payload
+		})
+		builder.addCase(login.fulfilled, (state, action: PayloadAction<any>) => {
+			const data = action.payload
+
+			if (data.success === true) {
+				state.user = {
+					...state.user,
+					...data.user,
+				}
+				saveToLocalStorage('token', data.token)
+			} else {
+				return data
+			}
 		})
 	},
 })

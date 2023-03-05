@@ -33,3 +33,12 @@ export const removeSpaceAndSplit = (arg: string) => {
 
 	return words
 }
+
+export const saveToLocalStorage = (flag: string, data: any) => {
+	const jsonString = JSON.stringify(data)
+	localStorage.setItem(flag, jsonString)
+}
+
+export const getFromLocalStorage = (flag: string) => {
+	return JSON.parse(localStorage.getItem(flag) as string)
+}
