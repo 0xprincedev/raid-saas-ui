@@ -25,6 +25,19 @@ const BookRaid = () => {
 		})
 	}, [_communities])
 
+	const valideTweetLink = (tweetLink: string) => {
+		// Regular expression to match the tweet ID in the URL
+		const tweetIdRegExp = /\/(\d+)$/
+
+		// Extract the tweet ID from the URL
+		const match = tweetLink.match(tweetIdRegExp)
+		if (match && match.length > 1) {
+			console.log(match[1])
+			return match[1]
+		}
+		return false
+	}
+
 	const handleBookRaid = async (val: any) => {
 		const {
 			budget,
@@ -33,6 +46,12 @@ const BookRaid = () => {
 			requiredWords: _requiredWords = '',
 			ineligibleWords: _ineligibleWords = '',
 		} = val
+
+		const temp = valideTweetLink(tweetLink)
+		if (!temp) {
+			toast.warn("Please input the correct tweet link.")
+			return
+		}
 
 		const requiredWords = removeSpaceAndSplit(_requiredWords)
 		const ineligibleWords = removeSpaceAndSplit(_ineligibleWords)

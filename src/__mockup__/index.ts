@@ -77,3 +77,24 @@ export const myActivityFeed = [
 		date: '2023-01-27T02:41:53.489+00:00',
 	},
 ]
+
+
+export const topRadiers = {
+	title: 'Top Radiers All Time',
+	keys: ['Member', 'Raids Completed', 'Most Active in'],
+	values: [
+		['Pablo', 5000, 'DeGods', 1, ''],
+		['0xPrince', 4506, 'y00ts', 5, ''],
+		['Mbenz12', 3506, 'Okay Bears', 1, ''],
+	],
+}
+
+export const topCommunitiyMembers = {
+	title: 'Top Community Members',
+	keys: ['Member', 'Raids Completed', 'Earnings'],
+	values: [
+		['Pablo', 40, 5000, 1, 'sol'],
+		['0xPrince', 37, 2000, -2, 'sol'],
+		['Mbenz12', 25, 1760, 0, 'sol'],
+	],
+}

@@ -1,50 +1,30 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Button from '@mui/material/Button'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
 import { useAppDispatch, useAppSelector } from 'app/hooks'
 import { RootState } from 'app/store'
-import { setMobileMenuStatus } from 'slices/user'
-
-const communities = [
-	{
-		name: 'DeGods',
-		badge: 0,
-	},
-	{
-		name: 'Okay Bears',
-		badge: 5,
-	},
-	{
-		name: 'y00ts',
-		badge: 2,
-	},
-	{
-		name: 'Bored Ape Yacht Club',
-		badge: 2,
-	},
-	{
-		name: 'Jelly Rascals',
-		badge: 0,
-	},
-	{
-		name: 'Decentraland',
-		badge: 5,
-	},
-	{
-		name: 'Vee Friends',
-		badge: 2,
-	},
-]
+import { getCommunities, setMobileMenuStatus } from 'slices/user'
+import { communityRegex } from "constant"
 
 interface Props {
 	type: number
 }
 
 const Sidebar = ({ type }: Props) => {
+	const { solana }: any = window
 	const [isOpen, setIsOpen] = useState<boolean>(false)
-	const { pathname } = useLocation()
+
+	const { pathname} = useLocation()
+
+	const communityId = useMemo(() => {
+		const match = pathname.match(communityRegex)
+		if (match && match.length > 1) {
+			return match[1]
+		}
+	}, [pathname])
+
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
 
@@ -52,13 +32,25 @@ const Sidebar = ({ type }: Props) => {
 		(state: RootState) => state.user.isMobileMenuOpen
 	)
 
+	const myComminities = useAppSelector((state: RootState) => state.user.communities)
+
 	useEffect(() => {
 		if (pathname.includes('communities')) {
 			setIsOpen(true)
+			const get = async () => {
+				await dispatch(getCommunities(solana._publicKey))
+			}
+			get()
 		} else {
 			setIsOpen(false)
 		}
-	}, [pathname])
+	}, [pathname]) // eslint-disable-line
+
+	useEffect(() => {
+		if (myComminities.length && pathname.includes('communities')) {
+			navigate(`/communities/${myComminities[0]._id}`)
+		}
+	}, [myComminities, navigate, pathname])
 
 	const isActive = (_pathname: string) => {
 		return decodeURI(pathname).includes(_pathname) ? 'active' : ''
@@ -89,8 +81,11 @@ const Sidebar = ({ type }: Props) => {
 									<ExpandMoreIcon />
 								</Link>
 								<div className={`communities ${isOpen ? 'opened' : ''}`}>
-									{communities.map((community, index) => (
-										<div className="community" key={index}>
+									{myComminities.map((community, index) => (
+										<div
+											className={`community ${communityId === community._id && 'active'}`}
+											key={index}
+										>
 											{community.name}
 										</div>
 									))}

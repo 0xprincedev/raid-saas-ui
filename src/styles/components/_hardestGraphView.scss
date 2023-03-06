@@ -1,0 +1,35 @@
+.hardestGraphView-component {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  height: 208px;
+
+  h6 {
+    color: var(--dark-gray);
+  }
+
+  .chart-view {
+    display: flex;
+    justify-content: space-between;
+    gap: 27px;
+
+    >svg {
+      position: relative;
+      width: 120px;
+      height: 120px;
+    }
+
+    .item-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .item {
+        display: flex;
+        gap: 3px;
+        align-items: center;
+      }
+    }
+  }
+}

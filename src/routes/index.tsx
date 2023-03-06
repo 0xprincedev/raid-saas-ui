@@ -15,6 +15,7 @@ import Initialize from 'components/Initialize'
 import type { RootState } from 'app/store'
 import { useAppDispatch } from 'app/hooks'
 import { login } from 'slices/user'
+import Leaderborad from 'pages/Leaderboard/Leaderborad'
 
 interface Props {
 	children: any
@@ -27,7 +28,6 @@ const RequireAuth = ({ children }: Props) => {
 	const logined = useMemo(() => {
 		return user?.walletAddress.length > 0
 	}, [user])
-
 
 	const { setVisible } = useWalletModal()
 	const dispatch = useAppDispatch()
@@ -48,7 +48,6 @@ const RequireAuth = ({ children }: Props) => {
 }
 
 const AppRoutes = () => {
-
 	return (
 		<>
 			<Routes>
@@ -62,11 +61,22 @@ const AppRoutes = () => {
 					}
 				/>
 				<Route path="communities">
+					<Route index element={<Communities />} />
+					<Route
+						path=":communityId"
+						element={
+							<RequireAuth>
+								<Communities />
+							</RequireAuth>
+						}
+					/>
+				</Route>
+				<Route path="leaderboard">
 					<Route
 						index
 						element={
 							<RequireAuth>
-								<Communities />
+								<Leaderborad />
 							</RequireAuth>
 						}
 					/>

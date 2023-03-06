@@ -14,6 +14,7 @@
 @import 'components/totalGraphView';
 @import 'components/totalTableView';
 @import 'components/topCommunities';
+@import 'components/hardestGraphView';
 
 @import 'layouts/layout';
 @import 'layouts/sidebar';
@@ -21,6 +22,8 @@
 
 @import 'pages/home';
 @import 'pages/dashboard';
+@import 'pages/leaderboard';
+@import 'pages/community';
 @import 'pages/settings';
 @import 'pages/bookRaid';
 @import 'pages/profile';
