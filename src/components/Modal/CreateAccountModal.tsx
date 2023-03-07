@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import axios from 'utils/axios'
 import Lottie from 'react-lottie-player'
 import Button from '@mui/material/Button'
 import Modal from '@mui/material/Modal'
 import TwitterIcon from '@mui/icons-material/Twitter'
 import { useWalletModal } from '@solana/wallet-adapter-react-ui'
 import { useSelector } from "react-redux"
+import TwitterLogin from 'react-twitter-auth';
 
 import { useAppDispatch } from "app/hooks"
 import { login, register } from 'slices/user'
@@ -50,10 +50,6 @@ const CreateAccountModal = (props: Props) => {
 		setCurrentStep(0)
 	}
 
-	const handleConnectTwitter = () => {
-		setCurrentStep(2)
-	}
-
 	const handleConnectDiscord = async() => {
 		if(!user.discordName) {
 			window.location.href = process.env.REACT_APP_DISCORD_OAUTH || '';
@@ -92,6 +88,20 @@ const CreateAccountModal = (props: Props) => {
 		}
 	}
 
+	const onTwitterSuccess = (response: any) => {
+		const token = response.headers.get('x-auth-token');
+    response.json().then((user: any) => {
+      if (token) {
+				console.log({token, user})
+      }
+    });
+		setCurrentStep(2)
+	}
+
+	const onTwitterFailed = (err: any) => {
+		console.log(err)
+	}
+
 	return (
 		<Modal open={open} onClose={handleClose}>
 			<div className="modal modal__create-account">
@@ -128,16 +138,27 @@ const CreateAccountModal = (props: Props) => {
 							/>
 						)}
 						{currentStep === 0 ? (
-							<Button className="btn-gradient" onClick={handleConnectWallet}>
+							<Button className="btn-gradient button" onClick={handleConnectWallet}>
 								Connect Wallet
 							</Button>
 						) : currentStep === 1 ? (
-							<Button className="connect-twitter" onClick={handleConnectTwitter}>
-								<TwitterIcon />
-								Connect Twitter
-							</Button>
+							<>
+							
+							<TwitterLogin 
+								loginUrl={`${process.env.REACT_APP_LOGIN_URL}`}
+								onFailure={onTwitterFailed} onSuccess={onTwitterSuccess}
+								requestTokenUrl={`${process.env.REACT_APP_REQUEST_TOKEN_URL}`}
+								style={{ backgroundColor: 'transparent' }}
+								children={
+									<Button className="connect-twitter button">
+										<TwitterIcon />
+											Connect Twitter
+									</Button>
+								}
+							/>
+							</>
 						) : currentStep === 2 ? (
-							<Button className="connect-discord" onClick={handleConnectDiscord}>
+							<Button className="connect-discord button" onClick={handleConnectDiscord}>
 								<DiscordIcon />
 								Connect Discord
 							</Button>
