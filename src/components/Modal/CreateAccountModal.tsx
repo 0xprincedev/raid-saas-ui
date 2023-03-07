@@ -1,16 +1,22 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import axios from 'utils/axios'
 import Lottie from 'react-lottie-player'
 import Button from '@mui/material/Button'
 import Modal from '@mui/material/Modal'
 import TwitterIcon from '@mui/icons-material/Twitter'
-import { useWallet } from '@solana/wallet-adapter-react'
 import { useWalletModal } from '@solana/wallet-adapter-react-ui'
+import { useSelector } from "react-redux"
 
-import axios from 'utils/axios'
+import { useAppDispatch } from "app/hooks"
+import { login, register } from 'slices/user'
+
 import { checked1 } from 'config/lottie'
 import { ReactComponent as DiscordIcon } from 'icons/discord.svg'
+
+import { RootState } from "app/store"
+import { saveToLocalStorage } from "utils"
 
 interface Props {
 	open: boolean
@@ -21,19 +27,21 @@ const CreateAccountModal = (props: Props) => {
 	const { open, closeModal } = props
 	const [currentStep, setCurrentStep] = useState<number>(0)
 	const navigate = useNavigate()
-	const wallet = useWallet()
+	const { solana }: any = window
 	const { setVisible } = useWalletModal()
+	const user = useSelector((state: RootState) => state.user.user)
+	const dispatch = useAppDispatch()
 
 	const onSignUp = async () => {
-		if (!wallet.publicKey) return
+		if (!solana._publicKey) return
 		try {
-			const { data } = await axios.post('/user/register', {
-				walletAddress: wallet.publicKey.toString(),
-			})
-			toast.success(data.message)
-			setCurrentStep(3)
+			saveToLocalStorage('walletAddress', solana._publicKey.toString())
+			if(user.walletAddress.length) {
+				return
+			}
+			await dispatch(register(solana._publicKey.toString()))
 		} catch (err: any) {
-			toast.error(err.message)
+			toast.error(err.response.data.message)
 		}
 	}
 
@@ -47,14 +55,18 @@ const CreateAccountModal = (props: Props) => {
 	}
 
 	const handleConnectDiscord = async() => {
-		onSignUp()
+		if(!user.discordName) {
+			window.location.href = process.env.REACT_APP_DISCORD_OAUTH || '';
+		}
+		setCurrentStep(3)
 	}
 
-	const handleConnectWallet = () => {
-		if (!wallet.publicKey) {
+	const handleConnectWallet = async() => {
+		if (!solana._publicKey) {
 			setVisible(true)
 			return
 		}
+		onSignUp()
 		setCurrentStep(1)
 	}
 

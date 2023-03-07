@@ -1,15 +1,42 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Button from '@mui/material/Button'
+
 import CreateAccountModal from 'components/Modal/CreateAccountModal'
 import ColorMode from 'components/ColorMode'
 
+import { useAppDispatch } from "app/hooks"
+import { loginDiscord } from 'slices/user'
+import { getFromLocalStorage } from "utils"
+import { toast } from "react-toastify"
+
 const Home = () => {
 	const [open, setOpen] = useState<boolean>(false)
+	const dispatch = useAppDispatch()
+	const { solana }: any = window
 
 	const handleStartRaiding = () => {
 		setOpen(true)
 	}
+
+	useEffect(() => {
+    const getCode = async() => {
+      if (window.location.href.indexOf('code') !== -1) {
+        const code = window.location.href.substring(
+          window.location.href.indexOf('code') + 5,
+          window.location.href.length
+        );
+
+				const walletAddress = getFromLocalStorage('walletAddress')
+				const res = await dispatch(loginDiscord({walletAddress, code}))
+				if(res?.payload?.success) {
+					toast.success(res.payload.message)
+				}
+      }
+    };
+
+    getCode();
+  }, []);
 
 	return (
 		<main className="home">

@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import { toast } from 'react-toastify'
 
 import { getCommunities as apiGetCommunities } from 'utils/user'
-import { login as apiLogin } from 'utils/user'
+import { login as apiLogin, apiLoginDiscord, apiRegister } from 'utils/user'
 import { saveToLocalStorage } from 'utils'
 interface Props {
 	isMobileMenuOpen: boolean
@@ -20,12 +21,33 @@ const initialState: Props = {
 	user: {
 		avatar: '/images/avatar.png',
 		walletAddress: [],
+		discordName: null,
+		twitterName: null,
 	},
 }
+
+export const register = createAsyncThunk('user/register', async (walletAddress: string) => {
+	try {
+		const data = await apiRegister(walletAddress)
+		toast.success(data.message)
+		return data
+	} catch (err: any) {
+		throw Error(err)
+	}
+})
 
 export const login = createAsyncThunk('user/login', async (walletAddress: string) => {
 	try {
 		const data = await apiLogin(walletAddress)
+		return data
+	} catch (err: any) {
+		throw Error(err)
+	}
+})
+
+export const loginDiscord = createAsyncThunk('user/login-discord', async ({walletAddress, code}: {walletAddress: any, code: string}) => {
+	try {
+		const data = await apiLoginDiscord({walletAddress, code})
 		return data
 	} catch (err: any) {
 		throw Error(err)
@@ -62,6 +84,18 @@ export const user = createSlice({
 		builder.addCase(getCommunities.fulfilled, (state, action: PayloadAction<any>) => {
 			state.communities = action.payload
 		})
+		builder.addCase(register.fulfilled, (state, action:PayloadAction<any>) => {
+			const data = action.payload
+
+			if (data.success === true) {
+				state.user = {
+					...state.user,
+					...data.user,
+				}
+				saveToLocalStorage('token', data.token)
+			}
+			return
+		})
 		builder.addCase(login.fulfilled, (state, action: PayloadAction<any>) => {
 			const data = action.payload
 
@@ -74,6 +108,15 @@ export const user = createSlice({
 			} else {
 				return data
 			}
+		})
+		builder.addCase(loginDiscord.fulfilled, (state, action: PayloadAction<any>) => {
+			const data = action.payload
+			state.user = {
+				...state.user,
+				discordName: data.discordName,
+			}
+			saveToLocalStorage('discordName', data.discordName)
+			return
 		})
 	},
 })

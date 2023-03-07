@@ -1,13 +1,30 @@
 import { toast } from 'react-toastify'
 import axios from 'utils/axios'
 
+export const apiRegister = async (walletAddress: string) => {
+	try {
+		const { data } = await axios.post('/user/register', { walletAddress })
+		return data
+	} catch (err: any) {
+		throw Error(err)
+	}
+}
+
 export const login = async (walletAddress: string) => {
 	try {
 		const { data } = await axios.post('/user/login', { walletAddress })
 		return data
 	} catch (err: any) {
-		toast.error(err.message)
-		return false
+		throw Error(err)
+	}
+}
+
+export const apiLoginDiscord = async ({walletAddress, code}: Record<string, string>) => {
+	try {
+		const { data } = await axios.post('/user/login-discord', { walletAddress, code })
+		return data
+	} catch (err: any) {
+		throw Error(err)
 	}
 }
 
