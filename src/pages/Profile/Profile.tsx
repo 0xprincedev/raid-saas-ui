@@ -5,6 +5,7 @@ import SouthIcon from '@mui/icons-material/South'
 
 import MainLayout from 'layouts/MainLayout'
 import TopCommunities from 'components/TopCommunities'
+import { Box } from '@mui/material'
 
 const avgEngagements = {
 	likes: {
@@ -31,7 +32,7 @@ const Profile = () => {
 	return (
 		<MainLayout title="Raid Saas - Profile" className="profile" sidebarType={1}>
 			<div className="container">
-				<div>
+				<Box sx={{ width: `100%` }}>
 					<div className="profile">
 						<h1 className="title text-gradient">Profile</h1>
 						<div className="content">
@@ -60,9 +61,9 @@ const Profile = () => {
 							</div>
 						</div>
 					</div>
-					<div className="campaign-history">
+					<Box className="campaign-history" sx={{ width: '100% !important' }}>
 						<h1 className="title text-gradient">Campaign History</h1>
-						<div className="content content-wrapper">
+						<Box className="content content-wrapper" sx={{ width: '100%' }}>
 							<div className="button-group">
 								<Button
 									className={`${status === 0 ? 'active' : ''}`}
@@ -78,14 +79,14 @@ const Profile = () => {
 								</Button>
 							</div>
 							<div className="table scrollbar">
-								<table>
+								<table style={{ width: '100%' }}>
 									<thead>
 										<tr>
-											<th>Campaign</th>
-											<th>Raids Remaining</th>
-											<th>Tweet Views</th>
-											<th>Likes</th>
-											<th>Retweets</th>
+											<th style={{ minWidth: '130px' }}>Campaign</th>
+											<th style={{ minWidth: '75px' }}>Raids Remaining</th>
+											<th style={{ minWidth: '55px' }}>Tweet Views</th>
+											<th style={{ minWidth: '40px' }}>Likes</th>
+											<th style={{ minWidth: '65px' }}>Retweets</th>
 											<th>Comments</th>
 										</tr>
 									</thead>
@@ -111,9 +112,9 @@ const Profile = () => {
 									</tbody>
 								</table>
 							</div>
-						</div>
-					</div>
-				</div>
+						</Box>
+					</Box>
+				</Box>
 				<TopCommunities />
 			</div>
 		</MainLayout>

@@ -1,444 +1,509 @@
 @import 'styles/abstracts/mixin';
 
 main.settings {
-  .container {
-    .content {
-      margin: 20px 0 12px;
-      padding: 32px;
+	.container {
+		.content {
+			margin: 20px 0 12px;
+			padding: 32px;
+			position: relative;
 
-      .button-group {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
+			.button-group {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 12px;
 
-        button {
-          border: 1px solid var(--gray-3);
-          border-radius: 999px;
-          padding: 6px 32px;
-          font-size: 20px;
-          font-weight: 600;
-          color: var(--dark-gray);
+				button {
+					border: 1px solid var(--gray-3);
+					border-radius: 999px;
+					padding: 6px 32px;
+					font-size: 20px;
+					font-weight: 600;
+					color: var(--dark-gray);
 
-          &.active {
-            background-color: var(--gray-3);
-          }
+					&.active {
+						background-color: var(--gray-3);
+					}
 
-          &:disabled {
-            color: var(--gray-3);
-          }
-        }
-      }
+					&:disabled {
+						color: var(--gray-3);
+					}
+				}
+			}
 
-      .billing-due {
-        display: grid;
-        gap: 8px;
-        font-size: 14px;
-        font-weight: 600;
+			.billing-due {
+				position: absolute;
+				top: 32px;
+				right: 32px;
+				display: grid;
+				gap: 8px;
+				font-size: 14px;
+				font-weight: 600;
 
-        >div {
-          display: flex;
-          align-items: center;
+				> div {
+					display: flex;
+					align-items: center;
+					gap: 6px;
 
-          p {
-            width: 100px;
-          }
-        }
-      }
+					button {
+						border: 1px solid var(--gray-3);
+						border-radius: 999px;
+						width: 164px;
+						height: 49px;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						font-size: 20px;
+						font-weight: 600;
+						color: var(--dark-gray);
+						background-color: var(--white);
+						position: relative;
 
-      h4 {
-        color: var(--dark-gray)
-      }
+						p {
+							position: absolute;
+							top: -50%;
+							left: 0;
+							width: 100px;
+							font-weight: 400;
+							font-size: 15px;
+							line-height: 18px;
+						}
+					}
+				}
+			}
 
-      section.account {
-        margin-top: 80px;
+			h4 {
+				color: var(--dark-gray);
+			}
 
-        h4 {
-          margin-bottom: 16px;
-        }
+			section.account {
+				margin-top: 80px;
 
-        .connections>div,
-        .wallets>div {
-          display: flex;
-          align-items: center;
-          border-top: 1px solid var(--gray-2);
-          padding: 0px 24px;
-          height: 64px;
-          font-size: 20px;
-          color: var(--dark-gray);
+				h4 {
+					margin-bottom: 16px;
+				}
 
-          button {
-            margin-left: auto;
-            border: 1px solid var(--gray-3);
-            border-radius: 999px;
-            width: 120px;
-            height: 36px;
-          }
-        }
+				.connections > div,
+				.wallets > div {
+					display: flex;
+					align-items: center;
+					border-top: 1px solid var(--gray-2);
+					padding: 0px 24px;
+					height: 64px;
+					font-size: 20px;
+					color: var(--dark-gray);
 
-        .connections {
-          >div {
-            .social {
-              display: flex;
-              gap: 12px;
-              align-items: center;
-              width: 30%;
+					button {
+						margin-left: auto;
+						border: 1px solid var(--gray-3);
+						border-radius: 999px;
+						width: 120px;
+						height: 36px;
+					}
+				}
 
-              svg {
-                width: 24px;
-              }
+				.connections {
+					> div {
+						.social {
+							display: flex;
+							gap: 12px;
+							align-items: center;
+							width: 30%;
 
-              &.twitter svg {
-                fill: var(--twitter)
-              }
+							svg {
+								width: 24px;
+							}
 
-              &.discord svg path {
-                fill: var(--discord)
-              }
-            }
-          }
-        }
+							&.twitter svg {
+								fill: var(--twitter);
+							}
 
-        .wallets {
-          margin-top: 40px;
-          display: flex;
-          flex-direction: column;
+							&.discord svg path {
+								fill: var(--discord);
+							}
+						}
+					}
+				}
 
-          .link-another-wallet {
-            margin: 40px auto 0;
-            height: 36px;
+				.wallets {
+					margin-top: 40px;
+					display: flex;
+					flex-direction: column;
 
-            span {
-              font-size: 14px;
-            }
-          }
-        }
-      }
+					.link-another-wallet {
+						margin: 40px auto 0;
+						height: 36px;
 
-      section.history {
-        margin-top: 80px;
+						span {
+							font-size: 14px;
+						}
+					}
+				}
+			}
 
-        h4 {
-          margin-bottom: 16px;
-        }
+			section.history {
+				margin-top: 80px;
 
-        .payout-history {
-          margin-top: 10px;
-          display: flex;
-          align-items: center;
-          border-radius: 4px;
-          padding: 0px 24px;
-          height: 64px;
-          background-color: var(--gray-4);
+				h4 {
+					margin-bottom: 16px;
+				}
 
-          p {
-            width: 30%;
-            font-size: 20px;
-            color: var(--dark-gray);
+				.payout-history {
+					margin-top: 10px;
+					display: flex;
+					align-items: center;
+					border-radius: 4px;
+					padding: 0px 24px;
+					height: 64px;
+					background-color: var(--gray-4);
 
-            span {
-              font-size: 10px;
-              color: var(--gray);
-            }
-          }
+					p {
+						width: 30%;
+						font-size: 20px;
+						color: var(--dark-gray);
 
-          .amount {
-            font-size: 24px;
-            font-weight: 600;
-            color: var(--success)
-          }
+						span {
+							font-size: 10px;
+							color: var(--gray);
+						}
+					}
 
-          .link {
-            margin-left: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 10px;
-            color: var(--gray);
+					.amount {
+						font-size: 24px;
+						font-weight: 600;
+						color: var(--success);
+					}
 
-            svg {
-              width: 32px;
-              height: 32px;
-              fill: var(--gray)
-            }
-          }
-        }
-      }
+					.link {
+						margin-left: auto;
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						font-size: 10px;
+						color: var(--gray);
 
-      section.manage-communities {
-        margin-top: 40px;
+						svg {
+							width: 32px;
+							height: 32px;
+							fill: var(--gray);
+						}
+					}
+				}
+			}
 
+			section.manage-communities {
+				margin-top: 40px;
 
-        h4 {
-          margin-bottom: 8px;
-        }
+				h4 {
+					margin-bottom: 8px;
+				}
 
-        .settings-group {
-          margin-top: 40px;
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: center;
-          column-gap: 24px;
-          row-gap: 64px;
+				.settings-group {
+					margin-top: 40px;
+					display: flex;
+					flex-direction: column;
+					flex-wrap: wrap;
+					justify-content: center;
+					column-gap: 24px;
+					row-gap: 64px;
+				}
 
-          >div {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex-grow: 1;
-          }
-        }
+				.community-settings {
+					display: flex;
+					flex-direction: column;
+					align-items: flex-start;
+					width: 100%;
 
-        .community-settings {
-          >div {
-            margin-top: 24px;
-            display: flex;
-            flex-direction: column;
-            color: var(--dark-gray);
+					> div {
+						display: flex;
+						width: 100%;
+						justify-content: space-between;
+						align-items: center;
+						color: var(--dark-gray);
 
-            >div {
-              display: flex;
-              align-items: center;
-              gap: 16px;
-              font-size: 24px;
-              font-weight: 600;
+						img {
+							width: 46px;
+							height: 46px;
+							border-radius: 10px;
+						}
 
-              img {
-                border-radius: 4px;
-                width: 48px;
-                height: 48px;
-              }
-            }
+						> div {
+							display: flex;
+							align-items: center;
+							gap: 16px;
+							font-size: 24px;
+							font-weight: 600;
 
-            p {
-              margin-top: 12px;
-              font-size: 20px;
-            }
+							img {
+								border-radius: 4px;
+								width: 48px;
+								height: 48px;
+							}
+						}
 
-            button {
-              margin-top: 32px;
-              border: 1px solid var(--gray-3);
-              border-radius: 999px;
-            }
-          }
-        }
+						p {
+							font-size: 20px;
+						}
 
-        .collection-settings {
-          .description {
-            font-size: 14px;
-            text-align: center;
-            color: var(--gray);
-          }
+						button {
+							border: 1px solid var(--gray-3);
+							border-radius: 999px;
+						}
+					}
+				}
 
-          .collections {
-            margin-top: 24px;
-            display: grid;
-            gap: 16px;
+				.collection-settings {
+					width: 100%;
 
-            .collection {
-              display: flex;
-              align-items: center;
-              gap: 12px;
-              color: var(--dark-gray);
+					.description {
+						font-size: 14px;
+						color: var(--gray);
+					}
 
-              .name {
+					.name {
+						width: 100px;
+					}
+
+					.numbers {
+						width: 40px;
+					}
+
+					button {
+						border: 1px solid var(--gray-3);
+						border-radius: 999px;
+						width: 80px;
+						height: 28px;
+						font-size: 12px;
+					}
+
+					.add-collection {
+						margin-top: 32px;
+						height: 32px;
+						width: auto;
+
+						.btn__label {
+							font-size: 12px;
+						}
+					}
+				}
+
+				.booking-fees {
+					width: 100%;
+
+					.bookings {
+						margin-top: 24px;
+
+						.menu {
+							display: flex;
+							font-size: 12px;
+							color: var(--gray);
+
+							p:first-child {
+								width: 100px;
+							}
+
+							p:nth-child(2) {
+								width: 40px;
+							}
+
+							p:nth-child(3) {
+								width: 120px;
+							}
+						}
+
+						.booking {
+							margin-top: 16px;
+							display: flex;
+							align-items: center;
+							font-size: 14px;
+							color: var(--dark-gray);
+
+							.address {
+								width: 100px;
+							}
+
+							.fee {
+								width: 40px;
+							}
+
+							.total-fees-earned {
+								width: 120px;
+							}
+
+							button {
+								border: 1px solid var(--gray-3);
+								border-radius: 999px;
+								width: 80px;
+								height: 28px;
+							}
+						}
+					}
+				}
+			}
+
+			@include media-xl {
+				.billing-due {
+					top: -20px;
+					right: 20px;
+				}
+			}
+
+			@include media-sm {
+				padding: 20px;
+
+				.button-group {
+					button {
+						padding: 4px 20px;
+						font-size: 12px;
+					}
+				}
+
+				.billing-due {
+					top: -15px;
+					right: 20px;
+					> div {
+						button {
+							width: 120px;
+							height: 31px;
+							font-size: 12px;
+
+              p {
+                top: -70%;
+                left: 0;
                 width: 100px;
               }
+						}
+					}
+				}
 
-              .numbers {
-                width: 40px;
-              }
+				section.account {
+					margin-top: 32px;
 
-              button {
-                border: 1px solid var(--gray-3);
-                border-radius: 999px;
+					.connections > div,
+					.wallets > div {
+						padding: 0;
+						height: 40px;
+						font-size: 12px;
+
+						button {
+							width: 80px;
+							height: 24px;
+						}
+					}
+
+					.connections > div {
+						.social {
+							gap: 4px;
+
+							svg {
+								width: 16px;
+							}
+						}
+					}
+
+					.wallets {
+						margin-top: 16px;
+
+						.link-another-wallet {
+							margin-top: 16px;
+						}
+					}
+				}
+
+				section.history {
+					margin-top: 32px;
+
+					.payout-history {
+						padding: 0px 12px;
+						height: 48px;
+
+						p {
+							width: 110px;
+							font-size: 12px;
+						}
+
+						.amount {
+							font-size: 14px;
+						}
+
+						.link {
+							svg {
+								width: 24px;
+								height: 24px;
+							}
+						}
+					}
+				}
+
+				section.manage-communities {
+					.booking-fees {
+						.bookings {
+							.menu {
+								font-size: 10px;
+
+								p:first-child {
+									width: 80px;
+								}
+
+								p:nth-child(2) {
+									width: 32px;
+								}
+
+								p:nth-child(3) {
+									width: 100px;
+								}
+							}
+
+							.booking {
+								font-size: 12px;
+
+								.address {
+									width: 80px;
+								}
+
+								.fee {
+									width: 32px;
+								}
+
+								.total-fees-earned {
+									width: 80px;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			@include media-xs {
+				.button-group {
+					gap: 8px;
+
+					button {
+						padding: 4px 8px;
+						font-size: 10px;
+					}
+				}
+
+				.billing-due {
+					top: -15px;
+					right: 20px;
+					> div {
+						button {
+							width: 100px;
+							height: 27.5px;
+							font-size: 10px;
+
+              p {
+                top: -50%;
+                left: 10px;
                 width: 80px;
-                height: 28px;
+                font-weight: 400;
                 font-size: 12px;
+                line-height: 12px;
               }
-            }
-          }
-
-          .add-collection {
-            margin-top: 32px;
-            height: 32px;
-
-            .btn__label {
-              font-size: 12px;
-            }
-          }
-        }
-
-        .booking-fees {
-          .bookings {
-            margin-top: 24px;
-
-            .menu {
-              display: flex;
-              font-size: 12px;
-              color: var(--gray);
-
-              p:first-child {
-                width: 100px;
-              }
-
-              p:nth-child(2) {
-                width: 40px;
-              }
-
-              p:nth-child(3) {
-                width: 120px;
-              }
-            }
-
-            .booking {
-              margin-top: 16px;
-              display: flex;
-              align-items: center;
-              font-size: 14px;
-              color: var(--dark-gray);
-
-              .address {
-                width: 100px;
-              }
-
-              .fee {
-                width: 40px;
-              }
-
-              .total-fees-earned {
-                width: 120px;
-              }
-
-              button {
-                border: 1px solid var(--gray-3);
-                border-radius: 999px;
-                width: 80px;
-                height: 28px;
-              }
-            }
-          }
-        }
-      }
-
-      @include media-sm {
-        padding: 20px;
-
-        .button-group {
-          button {
-            padding: 4px 20px;
-            font-size: 12px;
-          }
-        }
-
-        section.account {
-          margin-top: 32px;
-
-          .connections>div,
-          .wallets>div {
-            padding: 0;
-            height: 40px;
-            font-size: 12px;
-
-            button {
-              width: 80px;
-              height: 24px;
-            }
-          }
-
-          .connections>div {
-            .social {
-              gap: 4px;
-
-              svg {
-                width: 16px;
-              }
-            }
-          }
-
-          .wallets {
-            margin-top: 16px;
-
-            .link-another-wallet {
-              margin-top: 16px;
-            }
-          }
-        }
-
-        section.history {
-          margin-top: 32px;
-
-          .payout-history {
-            padding: 0px 12px;
-            height: 48px;
-
-            p {
-              width: 110px;
-              font-size: 12px;
-            }
-
-            .amount {
-              font-size: 14px;
-            }
-
-            .link {
-              svg {
-                width: 24px;
-                height: 24px;
-              }
-            }
-          }
-        }
-
-        section.manage-communities {
-          .booking-fees {
-            .bookings {
-              .menu {
-                font-size: 10px;
-
-                p:first-child {
-                  width: 80px;
-                }
-
-                p:nth-child(2) {
-                  width: 32px;
-                }
-
-                p:nth-child(3) {
-                  width: 100px;
-                }
-              }
-
-              .booking {
-                font-size: 12px;
-
-                .address {
-                  width: 80px;
-                }
-
-                .fee {
-                  width: 32px;
-                }
-
-                .total-fees-earned {
-                  width: 80px;
-                }
-              }
-            }
-          }
-        }
-      }
-
-      @include media-xs {
-
-        .button-group {
-          gap: 8px;
-
-          button {
-            padding: 4px 8px;
-            font-size: 10px;
-          }
-        }
-      }
-    }
-  }
+						}
+					}
+				}
+			}
+		}
+	}
 }

@@ -46,7 +46,7 @@ const CreateAccountModal = (props: Props) => {
 		setCurrentStep(2)
 	}
 
-	const handleConnectDiscord = () => {
+	const handleConnectDiscord = async() => {
 		onSignUp()
 	}
 
