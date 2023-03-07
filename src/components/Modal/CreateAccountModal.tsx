@@ -32,19 +32,6 @@ const CreateAccountModal = (props: Props) => {
 	const user = useSelector((state: RootState) => state.user.user)
 	const dispatch = useAppDispatch()
 
-	const onSignUp = async () => {
-		if (!solana._publicKey) return
-		try {
-			saveToLocalStorage('walletAddress', solana._publicKey.toString())
-			if(user.walletAddress.length) {
-				return
-			}
-			await dispatch(register(solana._publicKey.toString()))
-		} catch (err: any) {
-			toast.error(err.response.data.message)
-		}
-	}
-
 	const handleClose = () => {
 		closeModal()
 		setCurrentStep(0)
@@ -62,7 +49,15 @@ const CreateAccountModal = (props: Props) => {
 			setVisible(true)
 			return
 		}
-		onSignUp()
+		try {
+			saveToLocalStorage('walletAddress', solana._publicKey.toString())
+			if(user.walletAddress.length) {
+				return
+			}
+			await dispatch(register(solana._publicKey.toString()))
+		} catch (err: any) {
+			toast.error(err.response.data.message)
+		}
 		setCurrentStep(1)
 	}
 
