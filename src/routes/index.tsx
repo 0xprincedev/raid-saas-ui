@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { useWalletModal } from '@solana/wallet-adapter-react-ui'
+import { useWallet } from "@solana/wallet-adapter-react"
 import { useSelector } from 'react-redux'
 
 import Home from 'pages/Home'
@@ -16,14 +17,17 @@ import type { RootState } from 'app/store'
 import { useAppDispatch } from 'app/hooks'
 import { login } from 'slices/user'
 import Leaderborad from 'pages/Leaderboard/Leaderborad'
+import { toast } from "react-toastify"
+import { getFromLocalStorage } from "utils"
 
 interface Props {
 	children: any
 }
 
 const RequireAuth = ({ children }: Props) => {
-	const { solana }: any = window
-	const user = useSelector((state: RootState) => state.user.user)
+	const wallet = useWallet()
+	// const user = useSelector((state: RootState) => state.user.user)
+	const user = getFromLocalStorage('user')
 
 	const logined = useMemo(() => {
 		return user?.walletAddress.length > 0
@@ -33,16 +37,23 @@ const RequireAuth = ({ children }: Props) => {
 	const dispatch = useAppDispatch()
 
 	const handleLogin = async () => {
-		if (!solana._publicKey) {
+		if (!wallet.publicKey) {
 			setVisible(true)
 			return
 		}
-		await dispatch(login(solana._publicKey))
+
+		console.log(wallet.publicKey.toString())
+		const res = await dispatch(login(wallet.publicKey.toString()))
+		if (res.payload.success) {
+			toast.success(res.payload.message)
+		} else {
+			toast.error(res.payload.message)
+		}
 	}
 
 	useEffect(() => {
 		handleLogin()
-	}, [solana]) // eslint-disable-line
+	}, [wallet.publicKey]) // eslint-disable-line
 
 	return logined === true ? children : <Navigate to="/" replace />
 }

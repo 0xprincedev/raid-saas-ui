@@ -1,64 +1,100 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Lottie from 'react-lottie-player'
 import Button from '@mui/material/Button'
 import Modal from '@mui/material/Modal'
 import TwitterIcon from '@mui/icons-material/Twitter'
 import { useWalletModal } from '@solana/wallet-adapter-react-ui'
-import { useSelector } from "react-redux"
-import TwitterLogin from 'react-twitter-auth';
+import { useSelector } from 'react-redux'
+import TwitterLogin from 'react-twitter-auth'
 
-import { useAppDispatch } from "app/hooks"
-import { login, register } from 'slices/user'
+import { useAppDispatch, useAppSelector } from 'app/hooks'
+import { loginDiscord, register, setIsCreateAccountModalOpen } from 'slices/user'
+import { setCurrentStep, getCommunities } from 'slices/user'
+import { apiLogin } from "utils/user"
 
 import { checked1 } from 'config/lottie'
 import { ReactComponent as DiscordIcon } from 'icons/discord.svg'
 
-import { RootState } from "app/store"
-import { saveToLocalStorage } from "utils"
+import { RootState } from 'app/store'
+import { getFromLocalStorage, saveToLocalStorage } from 'utils'
+import { useWallet } from '@solana/wallet-adapter-react'
 
-interface Props {
-	open: boolean
-	closeModal: () => void
-}
-
-const CreateAccountModal = (props: Props) => {
-	const { open, closeModal } = props
-	const [currentStep, setCurrentStep] = useState<number>(0)
+const CreateAccountModal = () => {
+	const open = useAppSelector((state: RootState) => state.user.isCreateAccountModalOpen)
+	const currentStep = useAppSelector((state: RootState) => state.user.currentStep)
 	const navigate = useNavigate()
-	const { solana }: any = window
+	const wallet = useWallet()
 	const { setVisible } = useWalletModal()
 	const user = useSelector((state: RootState) => state.user.user)
 	const dispatch = useAppDispatch()
 
+	const closeModal = () => {
+		dispatch(setIsCreateAccountModalOpen(false))
+	}
+
 	const handleClose = () => {
 		closeModal()
-		setCurrentStep(0)
+		dispatch(setCurrentStep(0))
 	}
 
-	const handleConnectDiscord = async() => {
-		if(!user.discordName) {
-			window.location.href = process.env.REACT_APP_DISCORD_OAUTH || '';
+	useEffect(() => {
+		const getCode = async () => {
+			if (window.location.href.indexOf('code') !== -1) {
+				const code = window.location.href.substring(
+					window.location.href.indexOf('code') + 5,
+					window.location.href.length
+				)
+
+				const resDiscord = await dispatch(loginDiscord( code ))
+				if (!resDiscord?.payload?.success) {
+					return
+				}
+				saveToLocalStorage('discordName', resDiscord?.payload?.discordName)
+				toast.success(resDiscord.payload.message)
+
+				const walletAddress = getFromLocalStorage('walletAddress')
+				const { displayName: twitterDisplayName, username: twitterUserName } = getFromLocalStorage('twitterInfo')
+				const discordName = getFromLocalStorage('discordName')
+
+				const resRegister = await dispatch(register({walletAddress, twitterDisplayName, twitterUserName, discordName}))
+				await dispatch(getCommunities(walletAddress))
+				console.log(resRegister)
+				if (!resRegister?.payload?.success) {
+					return
+				}
+				toast.success(resRegister?.payload.message)
+				dispatch(setIsCreateAccountModalOpen(true))
+				dispatch(setCurrentStep(3))
+			}
 		}
-		setCurrentStep(3)
+		getCode()	
+	}, [])
+
+	const handleConnectDiscord = async () => {
+		if (!user.discordName) {
+			window.location.href = process.env.REACT_APP_DISCORD_OAUTH || ''
+		}
 	}
 
-	const handleConnectWallet = async() => {
-		if (!solana._publicKey) {
+	const handleConnectWallet = async () => {
+		if (!wallet.publicKey) {
 			setVisible(true)
 			return
 		}
 		try {
-			saveToLocalStorage('walletAddress', solana._publicKey.toString())
-			if(user.walletAddress.length) {
-				return
+			// check if wallet address is already registered
+			const res = await apiLogin(wallet.publicKey.toString())
+			if (res.success) {
+				toast.warning('This wallet is already registered, login instead')
+				closeModal()
+			} else {
+				dispatch(setCurrentStep(1))
 			}
-			await dispatch(register(solana._publicKey.toString()))
 		} catch (err: any) {
-			toast.error(err.response.data.message)
+			toast.error('Something went wrong, please try again')
 		}
-		setCurrentStep(1)
 	}
 
 	const handleStartRaiding = () => {
@@ -83,14 +119,12 @@ const CreateAccountModal = (props: Props) => {
 		}
 	}
 
-	const onTwitterSuccess = (response: any) => {
-		const token = response.headers.get('x-auth-token');
-    response.json().then((user: any) => {
-      if (token) {
-				console.log({token, user})
-      }
-    });
-		setCurrentStep(2)
+	const onTwitterSuccess = async(response: any) => {
+		const { user, success } = await response.json()
+		if (success) {
+			saveToLocalStorage("twitterInfo", {displayName: user.displayName, username: user.username})
+		}
+		dispatch(setCurrentStep(2))
 	}
 
 	const onTwitterFailed = (err: any) => {
@@ -138,19 +172,20 @@ const CreateAccountModal = (props: Props) => {
 							</Button>
 						) : currentStep === 1 ? (
 							<>
-							
-							<TwitterLogin 
-								loginUrl={`${process.env.REACT_APP_LOGIN_URL}`}
-								onFailure={onTwitterFailed} onSuccess={onTwitterSuccess}
-								requestTokenUrl={`${process.env.REACT_APP_REQUEST_TOKEN_URL}`}
-								style={{ backgroundColor: 'transparent' }}
-								children={
-									<Button className="connect-twitter button">
-										<TwitterIcon />
+							{console.log(process.env.REACT_APP_LOGIN_URL)}
+								<TwitterLogin
+									loginUrl={`${process.env.REACT_APP_LOGIN_URL}`}
+									onFailure={onTwitterFailed}
+									onSuccess={onTwitterSuccess}
+									requestTokenUrl={`${process.env.REACT_APP_REQUEST_TOKEN_URL}`}
+									style={{ backgroundColor: 'transparent' }}
+									children={
+										<Button className="connect-twitter button">
+											<TwitterIcon />
 											Connect Twitter
-									</Button>
-								}
-							/>
+										</Button>
+									}
+								/>
 							</>
 						) : currentStep === 2 ? (
 							<Button className="connect-discord button" onClick={handleConnectDiscord}>

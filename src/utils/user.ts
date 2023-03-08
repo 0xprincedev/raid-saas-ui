@@ -1,16 +1,16 @@
 import { toast } from 'react-toastify'
 import axios from 'utils/axios'
 
-export const apiRegister = async (walletAddress: string) => {
+export const apiRegister = async ({walletAddress, twitterDisplayName, twitterUserName, discordName}: Record<string, string>) => {
 	try {
-		const { data } = await axios.post('/user/register', { walletAddress })
+		const { data } = await axios.post('/user/register', {walletAddress, twitterDisplayName, twitterUserName, discordName})
 		return data
 	} catch (err: any) {
 		throw Error(err)
 	}
 }
 
-export const login = async (walletAddress: string) => {
+export const apiLogin = async (walletAddress: string) => {
 	try {
 		const { data } = await axios.post('/user/login', { walletAddress })
 		return data
@@ -19,20 +19,20 @@ export const login = async (walletAddress: string) => {
 	}
 }
 
-export const apiLoginDiscord = async ({walletAddress, code}: Record<string, string>) => {
+export const apiLoginDiscord = async (code: string) => {
 	try {
-		const { data } = await axios.post('/user/login-discord', { walletAddress, code })
+		const { data } = await axios.post('/user/login-discord', { code })
 		return data
 	} catch (err: any) {
 		throw Error(err)
 	}
 }
 
-export const getUserInformation = () => {
+export const apiGetUserInformation = () => {
 	return JSON.parse(localStorage.getItem('user') || '')
 }
 
-export const getCommunities = async (walletAddress: string) => {
+export const apiGetCommunities = async (walletAddress: string) => {
 	try {
 		const { data } = await axios.post('/user/getCommunities', { walletAddress })
 		return data.communities

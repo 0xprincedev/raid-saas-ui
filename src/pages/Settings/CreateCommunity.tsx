@@ -14,7 +14,7 @@ import axios from 'utils/axios'
 import { convertToBase64 } from 'utils'
 import MainLayout from 'layouts/MainLayout'
 import InputForm from 'components/Form/InputForm'
-import { getUserInformation } from 'utils/user'
+import { apiGetUserInformation } from 'utils/user'
 
 const hsClient = new HyperspaceClient(HYPERSPACE_API_KEY)
 
@@ -65,7 +65,7 @@ const CreateCommunity = () => {
 
 		setIsSubmitting(true)
 
-		const user = getUserInformation()
+		const user = apiGetUserInformation()
 		const logo = await convertToBase64(file)
 
 		try {

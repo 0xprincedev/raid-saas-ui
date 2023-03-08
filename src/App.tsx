@@ -21,6 +21,7 @@ import { mainnetRPC } from 'constant'
 import useWindowSize from 'hooks/useWindowSize'
 import AppRoutes from 'routes'
 import Loading from 'components/Loading'
+import CreateAccountModal from 'components/Modal/CreateAccountModal'
 import 'styles/app.scss'
 
 const network = WalletAdapterNetwork.Mainnet
@@ -82,6 +83,7 @@ const App = () => {
 						<ThemeProvider theme={theme}>
 							<CssBaseline />
 							<AppRoutes />
+							<CreateAccountModal />
 						</ThemeProvider>
 					</WalletModalProvider>
 				</WalletProvider>

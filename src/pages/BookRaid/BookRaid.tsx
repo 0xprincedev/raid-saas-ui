@@ -35,7 +35,7 @@ const BookRaid = () => {
 			console.log(match[1])
 			return match[1]
 		}
-		return false
+		return ""
 	}
 
 	const handleBookRaid = async (val: any) => {
@@ -47,8 +47,8 @@ const BookRaid = () => {
 			ineligibleWords: _ineligibleWords = '',
 		} = val
 
-		const temp = valideTweetLink(tweetLink)
-		if (!temp) {
+		const tweetId: string = valideTweetLink(tweetLink)
+		if (tweetId === "") {
 			toast.warn("Please input the correct tweet link.")
 			return
 		}
@@ -62,7 +62,7 @@ const BookRaid = () => {
 			const res = await createRaid({
 				budget,
 				community,
-				tweetLink,
+				tweetId,
 				requiredWords,
 				ineligibleWords,
 			})

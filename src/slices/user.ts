@@ -2,14 +2,16 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { toast } from 'react-toastify'
 
-import { getCommunities as apiGetCommunities } from 'utils/user'
-import { login as apiLogin, apiLoginDiscord, apiRegister } from 'utils/user'
+import { apiGetCommunities } from 'utils/user'
+import { apiLogin, apiLoginDiscord, apiRegister } from 'utils/user'
 import { saveToLocalStorage } from 'utils'
 interface Props {
 	isMobileMenuOpen: boolean
 	colorMode: ColorMode
 	isLoading: boolean
 	communities: Record<string, any>[]
+	isCreateAccountModalOpen: boolean
+	currentStep: number
 	user: Record<string, any>
 }
 
@@ -18,6 +20,8 @@ const initialState: Props = {
 	colorMode: (localStorage.getItem('raid-saas-color-mode') as ColorMode) || 'light',
 	isLoading: false,
 	communities: [],
+	isCreateAccountModalOpen: false,
+	currentStep: 0,
 	user: {
 		avatar: '/images/avatar.png',
 		walletAddress: [],
@@ -26,10 +30,9 @@ const initialState: Props = {
 	},
 }
 
-export const register = createAsyncThunk('user/register', async (walletAddress: string) => {
+export const register = createAsyncThunk('user/register', async ({walletAddress, twitterDisplayName, twitterUserName, discordName}: Record<string, string>) => {
 	try {
-		const data = await apiRegister(walletAddress)
-		toast.success(data.message)
+		const data = await apiRegister({walletAddress, twitterDisplayName, twitterUserName, discordName})
 		return data
 	} catch (err: any) {
 		throw Error(err)
@@ -45,9 +48,9 @@ export const login = createAsyncThunk('user/login', async (walletAddress: string
 	}
 })
 
-export const loginDiscord = createAsyncThunk('user/login-discord', async ({walletAddress, code}: {walletAddress: any, code: string}) => {
+export const loginDiscord = createAsyncThunk('user/login-discord', async (code: string) => {
 	try {
-		const data = await apiLoginDiscord({walletAddress, code})
+		const data = await apiLoginDiscord(code)
 		return data
 	} catch (err: any) {
 		throw Error(err)
@@ -79,6 +82,12 @@ export const user = createSlice({
 		setLoadingStatus: (state, action: PayloadAction<boolean>) => {
 			state.isLoading = action.payload
 		},
+		setIsCreateAccountModalOpen: (state, action: PayloadAction<boolean>) => {
+			state.isCreateAccountModalOpen = action.payload
+		},
+		setCurrentStep: (state, action: PayloadAction<number>) => {
+			state.currentStep = action.payload
+		}
 	},
 	extraReducers: (builder) => {
 		builder.addCase(getCommunities.fulfilled, (state, action: PayloadAction<any>) => {
@@ -92,6 +101,7 @@ export const user = createSlice({
 					...state.user,
 					...data.user,
 				}
+				saveToLocalStorage('user', data.user)
 				saveToLocalStorage('token', data.token)
 			}
 			return
@@ -104,10 +114,12 @@ export const user = createSlice({
 					...state.user,
 					...data.user,
 				}
+				saveToLocalStorage('user', data.user)
 				saveToLocalStorage('token', data.token)
 			} else {
 				return data
 			}
+			return
 		})
 		builder.addCase(loginDiscord.fulfilled, (state, action: PayloadAction<any>) => {
 			const data = action.payload
@@ -121,6 +133,6 @@ export const user = createSlice({
 	},
 })
 
-export const { setMobileMenuStatus, setColorMode, setLoadingStatus } = user.actions
+export const { setMobileMenuStatus, setColorMode, setLoadingStatus, setIsCreateAccountModalOpen, setCurrentStep } = user.actions
 
 export default user.reducer
