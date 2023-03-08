@@ -11,9 +11,13 @@ export const createRaid = async (data: Raid) => {
 	}
 }
 
-export const apiGetRaid = async () => {
+export const apiGetRaid = async (communityId: string) => {
 	try {
-		const res = await axios.get('/raid')
+		const res = await axios.get('/raid', {
+			params: {
+				communityId,
+			}
+		})
 		return res
 	} catch (err: any) {
 		throw Error(err)

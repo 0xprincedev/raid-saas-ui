@@ -6,7 +6,6 @@ import TotalTableView from 'components/TotalTableView'
 import Raid from 'components/Raid'
 
 import { topCommunities } from '__mockup__'
-import { activeRaids } from '__mockup__'
 
 import { apiGetRaid } from "utils/raid"
 import { apiGetTwitterInfo } from "utils/twitter"
@@ -14,22 +13,45 @@ import { setIsCreateAccountModalOpen } from "slices/user"
 import { useAppDispatch } from "app/hooks"
 
 const Dashboard = () => {
-	// const [activeRaids, setActiveRaids] = useState<any[]>([])
+	const [displayDatas, setDisplayDatas] = useState<any[]>([])
+	const [allRaids, setAllRaids] = useState<any[]>([])
 	const dispatch = useAppDispatch()
 
 	useEffect(() => {
 		dispatch(setIsCreateAccountModalOpen(false))
-		
-		const getRaids = async() => {
-			const result = await apiGetRaid()
-			console.log('all raids', result)
-			const twitterInfo = await apiGetTwitterInfo('1628349254098997251')
-			
-			console.log('twitterInfo', twitterInfo)
-			// setActiveRaids(result.data)
-		}	
 		getRaids()
 	}, [])
+
+	const getRaids = async() => {
+		const result: any = await apiGetRaid('')
+		setAllRaids(result.data)
+	}	
+
+	const getTwitterInfo = async (allRaids: any) => {
+		const filteredRaids = []
+		for (const element of allRaids) {
+			const { data: twitterInfo } = await apiGetTwitterInfo(element.tweetId)
+			const temp = {
+				avatar: element.user.avatar,
+				twitterDisplayName: element.user.twitterDisplayName,
+				twitterUserName: element.user.twitterUserName,
+				communityName: element.community.name,
+				raidStatus: false,
+				twitterContent: twitterInfo.data,
+			}
+			filteredRaids.push(temp)
+		}
+		
+		setDisplayDatas(filteredRaids)	
+	}
+
+	useEffect(() => {
+		if (!allRaids.length) {
+			return
+		}
+		
+		getTwitterInfo(allRaids)
+	}, [allRaids])
 
 	return (
 		<MainLayout title="Dashboard" className="dashboard">
@@ -59,7 +81,7 @@ const Dashboard = () => {
 				<div className="active-raids">
 					<h1 className="title text-gradient">Active Raids</h1>
 					<div className="content">
-						{activeRaids.map((raid, index) => (
+						{displayDatas.map((raid, index) => (
 							<Raid data={raid} key={index} />
 						))}
 					</div>

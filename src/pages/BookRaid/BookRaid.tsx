@@ -19,6 +19,7 @@ const BookRaid = () => {
 	const [isFetching, setIsFetching] = useState<boolean>(false)
 	const navigate = useNavigate()
 	const _communities = useAppSelector((state: RootState) => state.user.communities)
+	const user = useAppSelector((state: RootState) => state.user.user)
 	const communities = useMemo(() => {
 		return _communities.map((item) => {
 			return { value: item._id, name: item.name }
@@ -39,6 +40,8 @@ const BookRaid = () => {
 	}
 
 	const handleBookRaid = async (val: any) => {
+		const { _id: userId } = user
+		
 		const {
 			budget,
 			community,
@@ -60,6 +63,7 @@ const BookRaid = () => {
 
 		try {
 			const res = await createRaid({
+				userId,
 				budget,
 				community,
 				tweetId,

@@ -7,6 +7,7 @@ type ColorMode = 'light' | 'dark'
 type RaidBudget = 1.5 | 3 | 5 | 10 | 15
 
 interface Raid {
+	userId: string
 	budget: RaidBudget
 	community: string
 	tweetId: string

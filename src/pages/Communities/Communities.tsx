@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import MainLayout from 'layouts/MainLayout'
@@ -8,10 +8,14 @@ import TotalView from "components/TotalView"
 
 import { communityRegex } from 'constant'
 
-import { activeRaids, topCommunitiyMembers } from "__mockup__"
+import { topCommunitiyMembers } from "__mockup__"
+import { apiGetRaid } from "utils/raid"
+import { apiGetTwitterInfo } from "utils/twitter"
 
 const Communities = () => {
 	const { pathname } = useLocation()
+	const [displayDatas, setDisplayDatas] = useState<any[]>([])
+	const [communityRaids, setCommunityRaids] = useState<any[]>([])
 
 	const communityId = useMemo(() => {
 		const match = pathname.match(communityRegex)
@@ -20,7 +24,43 @@ const Communities = () => {
 		}
 	}, [pathname])
 
-	useEffect(() => {}, [communityId])
+	const getRaids = async(communityId: string) => {
+		const result: any = await apiGetRaid(communityId)
+		setCommunityRaids(result.data)
+	}	
+
+	const getTwitterInfo = async (communityRaids: any) => {
+		const filteredRaids = []
+		for (const element of communityRaids) {
+			const { data: twitterInfo } = await apiGetTwitterInfo(element.tweetId)
+			const temp = {
+				avatar: element.user.avatar,
+				twitterDisplayName: element.user.twitterDisplayName,
+				twitterUserName: element.user.twitterUserName,
+				communityName: element.community.name,
+				raidStatus: false,
+				twitterContent: twitterInfo.data,
+			}
+			filteredRaids.push(temp)
+		}
+		
+		setDisplayDatas(filteredRaids)	
+	}
+
+	useEffect(() => {
+		if (!communityId) {
+			return
+		}
+		getRaids(communityId)
+	}, [communityId])
+
+	useEffect(() => {
+		if (!communityRaids.length) {
+			return
+		}
+		
+		getTwitterInfo(communityRaids)
+	}, [communityRaids])
 
 	return (
 		<MainLayout title="Communities" className="community">
@@ -55,7 +95,7 @@ const Communities = () => {
 				<div className="active-raids">
 					<h1 className="title text-gradient">Community Raids</h1>
 					<div className="content">
-						{activeRaids.map((raid, index) => (
+						{displayDatas.map((raid, index) => (
 							<Raid data={raid} key={index} />
 						))}
 					</div>
