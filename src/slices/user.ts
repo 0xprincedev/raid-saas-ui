@@ -26,7 +26,7 @@ const initialState: Props = {
 		avatar: '/images/avatar.png',
 		walletAddress: [],
 		discordName: null,
-		twitterName: null,
+		twitterUserName: null,
 	},
 }
 

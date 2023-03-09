@@ -2,7 +2,6 @@ import { useEffect, useMemo } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { useWalletModal } from '@solana/wallet-adapter-react-ui'
 import { useWallet } from "@solana/wallet-adapter-react"
-import { useSelector } from 'react-redux'
 
 import Home from 'pages/Home'
 import Dashboard from 'pages/Dashboard'
@@ -13,7 +12,6 @@ import BookRaid from 'pages/BookRaid'
 import Profile from 'pages/Profile'
 import Initialize from 'components/Initialize'
 
-import type { RootState } from 'app/store'
 import { useAppDispatch } from 'app/hooks'
 import { login } from 'slices/user'
 import Leaderborad from 'pages/Leaderboard/Leaderborad'
@@ -44,9 +42,7 @@ const RequireAuth = ({ children }: Props) => {
 
 		console.log(wallet.publicKey.toString())
 		const res = await dispatch(login(wallet.publicKey.toString()))
-		if (res.payload.success) {
-			toast.success(res.payload.message)
-		} else {
+		if (!res.payload.success) {
 			toast.error(res.payload.message)
 		}
 	}
