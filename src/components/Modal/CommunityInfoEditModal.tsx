@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Field, Form } from 'react-final-form'
 import Button from '@mui/material/Button'
 import Modal from '@mui/material/Modal'
@@ -23,18 +23,21 @@ const CommunityInfoEditModal = (props: Props) => {
 	const [file, setFile] = useState<any>(null)
 	const dispatch = useAppDispatch()
 
-	const { _id, name, twitterLink, discordLink } = props.data
+	const { _id, name, logo, twitterLink, discordLink } = props.data
 
 	const handleUpdate = async (data: any) => {
-		console.log(file)
+		let updatedLogo: any
 
-		if (file.size > 1024 * 100) {
-			return toast.warning('Maximum logo size is 100kb!')
+		if (file) {
+			if (file.size > 1024 * 100) {
+				return toast.warning('Maximum logo size is 100kb!')
+			}
+			updatedLogo = await convertToBase64(file)
+		} else {
+			updatedLogo = logo
 		}
 
-		const logo: any = await convertToBase64(file)
-
-		const result = await dispatch(updateCommunity({ id: _id, logo: logo.toString(), communityName: data.communityName, twitterLink: data.twitter, discordLink: data.discord }))
+		const result = await dispatch(updateCommunity({ id: _id, logo: updatedLogo.toString(), communityName: data.communityName, twitterLink: data.twitter, discordLink: data.discord }))
 		if(result.payload.success) {
 			toast.success(`${result.payload.messege}`)
 		}
@@ -51,7 +54,7 @@ const CommunityInfoEditModal = (props: Props) => {
 							<form onSubmit={handleSubmit} autoComplete="off" className="form">
 								<div className="form__body">
 									<div className="select-image">
-										<ImageDropzone defaultImage="/images/looties.png" setFile={setFile} />
+										<ImageDropzone defaultImage={logo} setFile={setFile} />
 										<div
 											className="click-to-upload"
 											title="Click to upload image for avatar"
