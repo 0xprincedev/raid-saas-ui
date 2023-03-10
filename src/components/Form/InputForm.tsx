@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
@@ -13,6 +13,7 @@ interface Props {
 	meta: any
 	label?: string
 	name?: string
+	defaultValue?: string 
 	placeholder?: string
 	helperText?: string
 	required?: boolean
@@ -29,6 +30,7 @@ const InputForm = (props: Props) => {
 		input,
 		label,
 		name,
+		defaultValue = '',
 		placeholder = '',
 		helperText = '',
 		required,
@@ -43,6 +45,10 @@ const InputForm = (props: Props) => {
 		input.onChange(pipe ? pipe(event.target.value) : event.target.value)
 	}
 
+	useEffect(() => {
+		input.onChange(defaultValue)
+	}, [])
+
 	return (
 		<TextField
 			autoComplete="off"
@@ -50,6 +56,7 @@ const InputForm = (props: Props) => {
 			type={showPassword ? 'text' : type}
 			label={label}
 			name={name}
+			defaultValue={defaultValue}
 			placeholder={placeholder}
 			helperText={helperText}
 			required={required}

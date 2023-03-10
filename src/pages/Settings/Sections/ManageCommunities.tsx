@@ -10,11 +10,17 @@ import Paper from '@mui/material/Paper'
 
 import { shortenAddress } from 'utils'
 import CommunityInfoEditModal from 'components/Modal/CommunityInfoEditModal'
+import { useAppSelector } from "app/hooks"
+import { RootState } from "app/store"
 
 const ManageCommunities = () => {
 	const [communityInfoEditModal, setCommunityInfoEditModal] = useState<boolean>(false)
+	const [communityData, setCommunityData] = useState<any>({})
+	// @ts-ignore
+	const myCommunities = useAppSelector((state: RootState) => state.user.communities) 
 
-	const handleEditCommunity = () => {
+	const handleEditCommunity = (index: number) => {
+		setCommunityData(myCommunities[index])
 		setCommunityInfoEditModal(true)
 	}
 
@@ -23,6 +29,7 @@ const ManageCommunities = () => {
 			<section className="manage-communities">
 				<CommunityInfoEditModal
 					open={communityInfoEditModal}
+					data={communityData}
 					closeModal={() => setCommunityInfoEditModal(false)}
 				/>
 				<div className="settings-group">
@@ -34,23 +41,25 @@ const ManageCommunities = () => {
 									<TableRow>
 										<TableCell>Logo</TableCell>
 										<TableCell align="left">Community Name</TableCell>
-										<TableCell align="right">Twitter</TableCell>
-										<TableCell align="right">Discord</TableCell>
+										<TableCell align="center">Twitter</TableCell>
+										<TableCell align="center">Discord</TableCell>
 										<TableCell align="right"></TableCell>
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									<TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-										<TableCell component="th" scope="row">
-											<img src="/images/looties.png" alt="" />
-										</TableCell>
-										<TableCell align="left">{`y00ts`}</TableCell>
-										<TableCell align="right">{`@y00ts`}</TableCell>
-										<TableCell align="right">{`/y00ts`}</TableCell>
-										<TableCell align="right">
-											<Button onClick={handleEditCommunity}>Edit</Button>
-										</TableCell>
-									</TableRow>
+									{myCommunities?.map((item:any, index:number) => (
+											<TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }} key={item._id}>
+												<TableCell component="th" scope="row">
+													<img src={item.logo} alt="logo" />
+												</TableCell>
+												<TableCell align="left">{item.name}</TableCell>
+												<TableCell align="center">{item.twitterLink}</TableCell>
+												<TableCell align="center">{item.discordLink}</TableCell>
+												<TableCell align="right">
+													<Button onClick={() => handleEditCommunity(index)}>Edit</Button>
+												</TableCell>
+											</TableRow>
+									))}
 								</TableBody>
 							</Table>
 						</TableContainer>
@@ -69,13 +78,15 @@ const ManageCommunities = () => {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									<TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-										<TableCell>{`y00ts`}</TableCell>
-										<TableCell align="left">{`205`}</TableCell>
-										<TableCell align="right">
-											<Button>Unlink</Button>
-										</TableCell>
-									</TableRow>
+									{myCommunities?.map((item: any) => (
+										<TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }} key={item._id}>
+											<TableCell>{item.nftCollection.name}</TableCell>
+											<TableCell align="left">{item.nftCollection.count}</TableCell>
+											<TableCell align="right">
+												<Button>Unlink</Button>
+											</TableCell>
+										</TableRow>
+									))}
 								</TableBody>
 							</Table>
 						</TableContainer>
@@ -133,7 +144,7 @@ const ManageCommunities = () => {
 			<div className="billing-due">
 				<div>
 					<button>
-						<p>Next Bill Due:</p>2/30/2023
+						<p>Next Bill Due:</p>{myCommunities[0]?.nftCollection.lastBilledDate}
 					</button>
 					<button>
 						<p>Total Due:</p>2.5 SOL

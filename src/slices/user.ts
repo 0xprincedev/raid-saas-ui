@@ -1,8 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { toast } from 'react-toastify'
 
-import { apiGetCommunities } from 'utils/user'
+import { apiGetCommunities, apiUpdateCommunity } from 'utils/community'
 import { apiLogin, apiLoginDiscord, apiRegister } from 'utils/user'
 import { saveToLocalStorage } from 'utils'
 
@@ -70,6 +69,18 @@ export const getCommunities = createAsyncThunk(
 	}
 )
 
+export const updateCommunity = createAsyncThunk(
+	'user/updateCommunities',
+	async ({id, communityName, twitterLink, discordLink}: Record<string, string>) => {
+		try {
+			const res = await apiUpdateCommunity({id, communityName, twitterLink, discordLink})
+			return res
+		} catch (err: any) {
+			throw Error(err)
+		}
+	}
+)
+
 export const user: any = createSlice({
 	name: 'user',
 	initialState,
@@ -94,6 +105,16 @@ export const user: any = createSlice({
 		builder.addCase(getCommunities.fulfilled, (state, action: PayloadAction<any>) => {
 			state.communities = action.payload
 		})
+		builder.addCase(updateCommunity.fulfilled, (state, action: PayloadAction<any>) => {
+			const data = action.payload
+			if(data.success) {
+				state.communities[0] = {
+					...state.communities[0],
+					...data.communities
+				}
+			}
+			return
+		})
 		builder.addCase(register.fulfilled, (state, action:PayloadAction<any>) => {
 			const data = action.payload
 
@@ -104,7 +125,7 @@ export const user: any = createSlice({
 				}
 				saveToLocalStorage('user', data.user)
 				saveToLocalStorage('token', data.token)
-			}
+			} 
 			return
 		})
 		builder.addCase(login.fulfilled, (state, action: PayloadAction<any>) => {

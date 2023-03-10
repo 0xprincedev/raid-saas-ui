@@ -13,10 +13,12 @@ import MainLayout from 'layouts/MainLayout'
 import InputForm from 'components/Form/InputForm'
 import SelectForm from 'components/Form/SelectForm'
 import TopCommunities from 'components/TopCommunities'
+import { apiGetTwitterInfo } from "utils/twitter"
 
 const BookRaid = () => {
 	const [values, setValues] = useState<Record<string, any>>({})
 	const [isFetching, setIsFetching] = useState<boolean>(false)
+	const [preview, setPreview] = useState<string>("")
 	const navigate = useNavigate()
 	// @ts-ignore
 	const _communities = useAppSelector((state: RootState) => state.user.communities)
@@ -81,8 +83,12 @@ const BookRaid = () => {
 		setIsFetching(false)
 	}
 
-	const handleChange = ({ values: arg }: any) => {
-		setValues(arg)
+	const handleChange = async ({ values: arg }: any) => {
+		console.log(arg)
+		const tweetId: string = valideTweetLink(arg.tweetLink)
+		const { data: twitterInfo } = await apiGetTwitterInfo(tweetId)
+		console.log(twitterInfo)
+		setPreview(twitterInfo.data)
 	}
 
 	return (
@@ -174,7 +180,7 @@ const BookRaid = () => {
 										</div>
 									</div>
 									<div className="preview">
-										<div className="tweet-preview"></div>
+										<div className="tweet-preview">{preview}</div>
 										<LoadingButton
 											loading={isFetching}
 											className="btn-gradient"

@@ -31,12 +31,3 @@ export const apiLoginDiscord = async (code: string) => {
 export const apiGetUserInformation = () => {
 	return JSON.parse(localStorage.getItem('user') || '')
 }
-
-export const apiGetCommunities = async (walletAddress: string) => {
-	try {
-		const { data } = await axios.post('/user/getCommunities', { walletAddress })
-		return data.communities
-	} catch (err: any) {
-		throw Error(err)
-	}
-}

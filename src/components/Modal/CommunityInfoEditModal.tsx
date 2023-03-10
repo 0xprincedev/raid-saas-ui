@@ -3,20 +3,35 @@ import { Field, Form } from 'react-final-form'
 import Button from '@mui/material/Button'
 import Modal from '@mui/material/Modal'
 import UploadIcon from '@mui/icons-material/Upload'
+import { toast } from "react-toastify"
 
 import ImageDropzone from 'components/ImageDropzone'
 import InputForm from 'components/Form/InputForm'
 
+import { updateCommunity } from "slices/user"
+import { useAppDispatch } from "app/hooks"
+
 interface Props {
 	open: boolean
+	data: any
 	closeModal: () => void
 }
 
 const CommunityInfoEditModal = (props: Props) => {
 	const { open, closeModal } = props
 	const [file, setFile] = useState<any>(null)
+	const dispatch = useAppDispatch()
 
-	const handleUpdate = () => {}
+	const { _id, name, twitterLink, discordLink } = props.data
+	console.log(props.data)
+
+	const handleUpdate = async (data: any) => {
+		const result = await dispatch(updateCommunity({ id: _id, communityName: data.communityName, twitterLink: data.twitter, discordLink: data.discord }))
+		if(result.payload.success) {
+			toast.success(`${result.payload.messege}`)
+		}
+		closeModal()
+	}
 
 	return (
 		<Modal open={open} onClose={closeModal}>
@@ -37,13 +52,13 @@ const CommunityInfoEditModal = (props: Props) => {
 										</div>
 									</div>
 									<Field name="communityName" label="Community Name" required>
-										{(props) => <InputForm {...props} />}
+										{(props) => <InputForm defaultValue={name} {...props} />}
 									</Field>
 									<Field name="twitter" label="Twitter" required>
-										{(props) => <InputForm {...props} />}
+										{(props) => <InputForm defaultValue={twitterLink} {...props} />}
 									</Field>
 									<Field name="discord" label="Discord" required>
-										{(props) => <InputForm {...props} />}
+										{(props) => <InputForm defaultValue={discordLink} {...props} />}
 									</Field>
 									<div className="form__footer">
 										<Button type="submit" variant="contained">
