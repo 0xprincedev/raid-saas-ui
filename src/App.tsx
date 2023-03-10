@@ -28,6 +28,7 @@ const network = WalletAdapterNetwork.Mainnet
 const endpoint = mainnetRPC
 
 const App = () => {
+	// @ts-ignore
 	const colorMode = useAppSelector((state: RootState) => state.user.colorMode)
 
 	const wallets = useMemo(

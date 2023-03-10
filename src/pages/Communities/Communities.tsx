@@ -11,11 +11,15 @@ import { communityRegex } from 'constant'
 import { topCommunitiyMembers } from "__mockup__"
 import { apiGetRaid } from "utils/raid"
 import { apiGetTwitterInfo } from "utils/twitter"
+import { useAppSelector } from "app/hooks"
+import { RootState } from "app/store"
 
 const Communities = () => {
 	const { pathname } = useLocation()
 	const [displayDatas, setDisplayDatas] = useState<any[]>([])
 	const [communityRaids, setCommunityRaids] = useState<any[]>([])
+	// @ts-ignore
+	const user = useAppSelector((state: RootState) => state.user.user)
 
 	const communityId = useMemo(() => {
 		const match = pathname.match(communityRegex)
@@ -34,12 +38,17 @@ const Communities = () => {
 		for (const element of communityRaids) {
 			const { data: twitterInfo } = await apiGetTwitterInfo(element.tweetId)
 			const temp = {
-				avatar: element.user.avatar,
-				twitterDisplayName: element.user.twitterDisplayName,
-				twitterUserName: element.user.twitterUserName,
+				userId: user._id,
+				raidId: element._id,
+				twitterId: element.tweetId,
+				avatar: element.user?.avatar,
+				twitterDisplayName: element.user?.twitterDisplayName,
+				twitterUserName: element.user?.twitterUserName,
 				communityName: element.community.name,
 				raidStatus: false,
 				twitterContent: twitterInfo.data,
+				requiredWords: element.requiredWords,
+				ineligibleWords: element.ineligibleWords
 			}
 			filteredRaids.push(temp)
 		}

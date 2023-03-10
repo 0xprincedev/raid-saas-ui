@@ -10,12 +10,15 @@ import { topCommunities } from '__mockup__'
 import { apiGetRaid } from "utils/raid"
 import { apiGetTwitterInfo } from "utils/twitter"
 import { setIsCreateAccountModalOpen } from "slices/user"
-import { useAppDispatch } from "app/hooks"
+import { useAppDispatch, useAppSelector } from "app/hooks"
+import { RootState } from "app/store"
 
 const Dashboard = () => {
 	const [displayDatas, setDisplayDatas] = useState<any[]>([])
 	const [allRaids, setAllRaids] = useState<any[]>([])
 	const dispatch = useAppDispatch()
+	// @ts-ignore
+	const user = useAppSelector((state: RootState) => state.user.user)
 
 	useEffect(() => {
 		dispatch(setIsCreateAccountModalOpen(false))
@@ -32,12 +35,17 @@ const Dashboard = () => {
 		for (const element of allRaids) {
 			const { data: twitterInfo } = await apiGetTwitterInfo(element.tweetId)
 			const temp = {
-				avatar: element.user.avatar,
-				twitterDisplayName: element.user.twitterDisplayName,
-				twitterUserName: element.user.twitterUserName,
+				userId: user._id,
+				raidId: element._id,
+				twitterId: element.tweetId,
+				avatar: element.user?.avatar,
+				twitterDisplayName: element.user?.twitterDisplayName,
+				twitterUserName: element.user?.twitterUserName,
 				communityName: element.community.name,
 				raidStatus: false,
 				twitterContent: twitterInfo.data,
+				requiredWords: element.requiredWords,
+				ineligibleWords: element.ineligibleWords
 			}
 			filteredRaids.push(temp)
 		}

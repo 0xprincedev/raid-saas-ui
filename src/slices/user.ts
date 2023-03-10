@@ -5,6 +5,7 @@ import { toast } from 'react-toastify'
 import { apiGetCommunities } from 'utils/user'
 import { apiLogin, apiLoginDiscord, apiRegister } from 'utils/user'
 import { saveToLocalStorage } from 'utils'
+
 interface Props {
 	isMobileMenuOpen: boolean
 	colorMode: ColorMode
@@ -12,7 +13,7 @@ interface Props {
 	communities: Record<string, any>[]
 	isCreateAccountModalOpen: boolean
 	currentStep: number
-	user: Record<string, any>
+	user: any
 }
 
 const initialState: Props = {
@@ -69,7 +70,7 @@ export const getCommunities = createAsyncThunk(
 	}
 )
 
-export const user = createSlice({
+export const user: any = createSlice({
 	name: 'user',
 	initialState,
 	reducers: {

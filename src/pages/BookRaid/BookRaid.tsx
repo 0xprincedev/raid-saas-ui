@@ -18,10 +18,12 @@ const BookRaid = () => {
 	const [values, setValues] = useState<Record<string, any>>({})
 	const [isFetching, setIsFetching] = useState<boolean>(false)
 	const navigate = useNavigate()
+	// @ts-ignore
 	const _communities = useAppSelector((state: RootState) => state.user.communities)
+	// @ts-ignore
 	const user = useAppSelector((state: RootState) => state.user.user)
 	const communities = useMemo(() => {
-		return _communities.map((item) => {
+		return _communities.map((item:any) => {
 			return { value: item._id, name: item.name }
 		})
 	}, [_communities])
@@ -152,7 +154,7 @@ const BookRaid = () => {
 												<span>
 													{
 														_communities.filter(
-															(item) => item._id === values.community
+															(item: any) => item._id === values.community
 														)?.[0]?.name
 													}{' '}
 													Community Treasury

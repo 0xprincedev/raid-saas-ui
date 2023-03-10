@@ -4,6 +4,7 @@ import { useAppSelector } from 'app/hooks'
 import { RootState } from 'app/store'
 
 const Loading = () => {
+	// @ts-ignore
 	const isLoading = useAppSelector((state: RootState) => state.user.isLoading)
 	return isLoading ? (
 		<Box

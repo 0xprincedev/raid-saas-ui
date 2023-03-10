@@ -29,16 +29,17 @@ const Sidebar = ({ type }: Props) => {
 	const dispatch = useAppDispatch()
 
 	const isMobileMenuOpen = useAppSelector(
+		//@ts-ignore
 		(state: RootState) => state.user.isMobileMenuOpen
 	)
-
+//@ts-ignore
 	const myComminities = useAppSelector((state: RootState) => state.user.communities)
 
 	useEffect(() => {
 		if (pathname.includes('communities')) {
 			setIsOpen(true)
 			const get = async () => {
-				await dispatch(getCommunities(solana._publicKey))
+				await dispatch(getCommunities(solana?._publicKey))
 			}
 			get()
 		} else {
@@ -47,7 +48,7 @@ const Sidebar = ({ type }: Props) => {
 	}, [pathname]) // eslint-disable-line
 
 	useEffect(() => {
-		if (myComminities.length && pathname.includes('communities')) {
+		if (myComminities?.length && pathname.includes('communities')) {
 			navigate(`/communities/${myComminities[0]._id}`)
 		}
 	}, [myComminities, navigate, pathname])
@@ -81,7 +82,7 @@ const Sidebar = ({ type }: Props) => {
 									<ExpandMoreIcon />
 								</Link>
 								<div className={`communities ${isOpen ? 'opened' : ''}`}>
-									{myComminities.map((community, index) => (
+									{myComminities?.map((community: any, index: number) => (
 										<div
 											className={`community ${communityId === community._id && 'active'}`}
 											key={index}

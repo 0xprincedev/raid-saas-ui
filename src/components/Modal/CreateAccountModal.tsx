@@ -22,11 +22,14 @@ import { getFromLocalStorage, saveToLocalStorage } from 'utils'
 import { useWallet } from '@solana/wallet-adapter-react'
 
 const CreateAccountModal = () => {
+	// @ts-ignore
 	const open = useAppSelector((state: RootState) => state.user.isCreateAccountModalOpen)
+	// @ts-ignore
 	const currentStep = useAppSelector((state: RootState) => state.user.currentStep)
 	const navigate = useNavigate()
 	const wallet = useWallet()
 	const { setVisible } = useWalletModal()
+	// @ts-ignore
 	const user = useSelector((state: RootState) => state.user.user)
 	const dispatch = useAppDispatch()
 

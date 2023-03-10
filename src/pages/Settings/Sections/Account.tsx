@@ -8,7 +8,8 @@ import { RootState } from "app/store"
 import { useWalletModal } from "@solana/wallet-adapter-react-ui"
 
 const Account = () => {
-	const user = useAppSelector((state: RootState) => state.user.user)
+	const user: any = useAppSelector((state: RootState) => (state.user as any).user)
+	// const user = useAppSelector((state: RootState) => state.user.user)
 	const  { setVisible } = useWalletModal()
 
 	const connectAnotherWallet = () => {
