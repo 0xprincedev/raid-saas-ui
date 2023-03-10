@@ -84,7 +84,6 @@ const BookRaid = () => {
 	}
 
 	const handleChange = async ({ values: arg }: any) => {
-		console.log(arg)
 		const tweetId: string = valideTweetLink(arg.tweetLink)
 		const { data: twitterInfo } = await apiGetTwitterInfo(tweetId)
 		console.log(twitterInfo)
@@ -180,7 +179,7 @@ const BookRaid = () => {
 										</div>
 									</div>
 									<div className="preview">
-										<div className="tweet-preview">{preview}</div>
+										<div className="tweet-preview" style={{ padding: "10px" }}>{preview}</div>
 										<LoadingButton
 											loading={isFetching}
 											className="btn-gradient"

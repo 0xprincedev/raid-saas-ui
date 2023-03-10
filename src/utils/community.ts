@@ -18,10 +18,10 @@ export const apiGetCommunities = async (walletAddress: string) => {
 	}
 }
 
-export const apiUpdateCommunity = async ({id, communityName, twitterLink, discordLink}: Record<string, string>) => {
+export const apiUpdateCommunity = async (data: any) => {
 	try {
-		const { data } = await axios.put('/community', {id, communityName, twitterLink, discordLink})
-		return data
+		const res = await axios.put('/community', data)
+		return res.data
 	} catch (err: any) {
 		throw Error(err)
 	}

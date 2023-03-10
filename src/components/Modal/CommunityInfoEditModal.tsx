@@ -10,6 +10,7 @@ import InputForm from 'components/Form/InputForm'
 
 import { updateCommunity } from "slices/user"
 import { useAppDispatch } from "app/hooks"
+import { convertToBase64 } from "utils"
 
 interface Props {
 	open: boolean
@@ -23,10 +24,17 @@ const CommunityInfoEditModal = (props: Props) => {
 	const dispatch = useAppDispatch()
 
 	const { _id, name, twitterLink, discordLink } = props.data
-	console.log(props.data)
 
 	const handleUpdate = async (data: any) => {
-		const result = await dispatch(updateCommunity({ id: _id, communityName: data.communityName, twitterLink: data.twitter, discordLink: data.discord }))
+		console.log(file)
+
+		if (file.size > 1024 * 100) {
+			return toast.warning('Maximum logo size is 100kb!')
+		}
+
+		const logo: any = await convertToBase64(file)
+
+		const result = await dispatch(updateCommunity({ id: _id, logo: logo.toString(), communityName: data.communityName, twitterLink: data.twitter, discordLink: data.discord }))
 		if(result.payload.success) {
 			toast.success(`${result.payload.messege}`)
 		}

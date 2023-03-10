@@ -71,9 +71,9 @@ export const getCommunities = createAsyncThunk(
 
 export const updateCommunity = createAsyncThunk(
 	'user/updateCommunities',
-	async ({id, communityName, twitterLink, discordLink}: Record<string, string>) => {
+	async ({id, logo, communityName, twitterLink, discordLink}: Record<string, string>) => {
 		try {
-			const res = await apiUpdateCommunity({id, communityName, twitterLink, discordLink})
+			const res = await apiUpdateCommunity({id, logo, communityName, twitterLink, discordLink})
 			return res
 		} catch (err: any) {
 			throw Error(err)
