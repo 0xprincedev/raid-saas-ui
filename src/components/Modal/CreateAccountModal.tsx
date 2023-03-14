@@ -58,10 +58,10 @@ const CreateAccountModal = () => {
 				toast.success(resDiscord.payload.message)
 
 				const walletAddress = getFromLocalStorage('walletAddress')
-				const { displayName: twitterDisplayName, username: twitterUserName } = getFromLocalStorage('twitterInfo')
+				const { displayName: twitterDisplayName, username: twitterUserName, twitterProviderToken } = getFromLocalStorage('twitterInfo')
 				const discordName = getFromLocalStorage('discordName')
 
-				const resRegister = await dispatch(register({walletAddress, twitterDisplayName, twitterUserName, discordName}))
+				const resRegister = await dispatch(register({walletAddress, twitterDisplayName, twitterUserName, twitterProviderToken, discordName}))
 				await dispatch(getCommunities(walletAddress))
 				console.log(resRegister)
 				if (!resRegister?.payload?.success) {
@@ -123,9 +123,9 @@ const CreateAccountModal = () => {
 	}
 
 	const onTwitterSuccess = async(response: any) => {
-		const { user, success } = await response.json()
+		const { user, success, twitterProviderToken } = await response.json()
 		if (success) {
-			saveToLocalStorage("twitterInfo", {displayName: user.displayName, username: user.username})
+			saveToLocalStorage("twitterInfo", { displayName: user.displayName, username: user.username, twitterProviderToken })
 		}
 		dispatch(setCurrentStep(2))
 	}

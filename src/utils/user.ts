@@ -1,9 +1,9 @@
 import { toast } from 'react-toastify'
 import axios from 'utils/axios'
 
-export const apiRegister = async ({walletAddress, twitterDisplayName, twitterUserName, discordName}: Record<string, string>) => {
+export const apiRegister = async ({walletAddress, twitterDisplayName, twitterUserName, twitterProviderToken, discordName}: Record<string, string>) => {
 	try {
-		const { data } = await axios.post('/user/register', {walletAddress, twitterDisplayName, twitterUserName, discordName})
+		const { data } = await axios.post('/user/register', {walletAddress, twitterDisplayName, twitterUserName, twitterProviderToken, discordName})
 		return data
 	} catch (err: any) {
 		throw Error(err)

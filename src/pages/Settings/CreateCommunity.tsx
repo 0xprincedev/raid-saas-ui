@@ -15,7 +15,7 @@ import { convertToBase64 } from 'utils'
 import MainLayout from 'layouts/MainLayout'
 import InputForm from 'components/Form/InputForm'
 import { apiGetUserInformation } from 'utils/user'
-import { apiCreateCommunity } from "utils/community"
+import { apiCreateCommunity } from 'utils/community'
 
 const hsClient = new HyperspaceClient(HYPERSPACE_API_KEY)
 
@@ -70,7 +70,7 @@ const CreateCommunity = () => {
 		const logo = await convertToBase64(file)
 
 		try {
-			await apiCreateCommunity({
+			const result = await apiCreateCommunity({
 				userId: user._id,
 				name,
 				logo,
@@ -78,8 +78,12 @@ const CreateCommunity = () => {
 				discord,
 				...collectionData,
 			})
-			toast.success('Successfully created a new community!')
-			navigate('/dashboard')
+			if (!result.success) {
+				toast.error(result.message)
+			} else {
+				toast.success('Successfully created a new community!')
+				navigate('/dashboard')
+			}
 		} catch (err: any) {
 			console.log(err)
 			toast.error(err.response?.data?.message || err.message)

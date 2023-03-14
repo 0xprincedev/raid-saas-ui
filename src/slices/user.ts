@@ -30,9 +30,9 @@ const initialState: Props = {
 	},
 }
 
-export const register = createAsyncThunk('user/register', async ({walletAddress, twitterDisplayName, twitterUserName, discordName}: Record<string, string>) => {
+export const register = createAsyncThunk('user/register', async ({walletAddress, twitterDisplayName, twitterUserName, twitterProviderToken, discordName}: Record<string, string>) => {
 	try {
-		const data = await apiRegister({walletAddress, twitterDisplayName, twitterUserName, discordName})
+		const data = await apiRegister({walletAddress, twitterDisplayName, twitterUserName, twitterProviderToken, discordName})
 		return data
 	} catch (err: any) {
 		throw Error(err)

@@ -15,16 +15,16 @@ export const apiGetTwitterInfo = async (tweetId: string) => {
 
 export const apiSetComment = async ({userId, raidId, description}: Record<string, string>) => {
 	try {
-		const res = await axios.post('/activity/comment', { userId, raidId, description })
+		const res = await axios.post('/twitter/comment', { userId, raidId, description })
 		return res
 	} catch (err: any) {
 		throw Error(err)
 	}
 }
 
-export const apiSetReNew = async ({userId, raidId}: Record<string, string>) => {
+export const apiSetReTweet = async ({userId, raidId}: Record<string, string>) => {
 	try {
-		const res = await axios.post('/activity/renew', { userId, raidId })
+		const res = await axios.post('/twitter/retweet', { userId, raidId })
 		return res
 	} catch (err: any) {
 		throw Error(err)
@@ -33,7 +33,7 @@ export const apiSetReNew = async ({userId, raidId}: Record<string, string>) => {
 
 export const apiSetFavorite = async ({userId, raidId}: Record<string, string>) => {
 	try {
-		const res = await axios.post('/activity/favorite', { userId, raidId })
+		const res = await axios.post('/twitter/favorite', { userId, raidId })
 		return res
 	} catch (err: any) {
 		throw Error(err)

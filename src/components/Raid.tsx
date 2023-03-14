@@ -7,7 +7,7 @@ import Button from '@mui/material/Button'
 import { Modal, Stack, TextareaAutosize, Typography } from "@mui/material"
 import { toast } from "react-toastify"
 
-import { apiSetComment, apiSetFavorite, apiSetReNew } from "utils/twitter"
+import { apiSetComment, apiSetFavorite, apiSetReTweet } from "utils/twitter"
 
 interface Props {
 	data: {
@@ -74,7 +74,7 @@ const Raid = ({ data }: Props) => {
 	}
 
 	const setReNew = async() => {
-		const result = await apiSetReNew({ userId: data.userId, raidId: data.raidId })
+		const result = await apiSetReTweet({ userId: data.userId, raidId: data.raidId })
 		toast.success(result.data.message)
 	}
 
