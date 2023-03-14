@@ -3,7 +3,7 @@ import axios from 'utils/axios'
 export const apiCreateCommunity = async (data: any) => {
 	try {
 		const res = await axios.post('/community', data)
-		return res
+		return res.data
 	} catch (err: any) {
 		throw Error(err)
 	}
